@@ -3,14 +3,20 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/core/widget/page_not_found.dart';
 import 'package:prokemn_app/feature/home/ui/home_page.dart';
+import 'package:prokemn_app/feature/lobby/ui/lobby_page.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
-  const initialLocation = '/home';
+  const initialLocation = '/lobby';
 
   return GoRouter(
     initialLocation: initialLocation,
     errorBuilder: (context, state) => PageNotFound(state: state),
     routes: [
+      GoRoute(
+        name: 'lobby',
+        path: '/lobby',
+        pageBuilder: (context, state) => buildPageWithTransition(LobbyPage()),
+      ),
       GoRoute(
         name: 'home',
         path: '/home',

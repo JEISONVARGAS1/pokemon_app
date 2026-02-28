@@ -66,16 +66,16 @@ class PokedexBottomNav extends StatelessWidget {
 }
 
 class _NavItem extends StatelessWidget {
-  final IconData icon;
   final String label;
+  final IconData icon;
   final bool isSelected;
   final VoidCallback onTap;
 
   const _NavItem({
     required this.icon,
+    required this.onTap,
     required this.label,
     required this.isSelected,
-    required this.onTap,
   });
 
   @override

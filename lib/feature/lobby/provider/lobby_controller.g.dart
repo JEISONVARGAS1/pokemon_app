@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'home_controller.dart';
+part of 'lobby_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,43 +9,43 @@ part of 'home_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(HomeController)
-final homeControllerProvider = HomeControllerProvider._();
+@ProviderFor(LobbyController)
+final lobbyControllerProvider = LobbyControllerProvider._();
 
-final class HomeControllerProvider
-    extends $AsyncNotifierProvider<HomeController, HomeState> {
-  HomeControllerProvider._()
+final class LobbyControllerProvider
+    extends $AsyncNotifierProvider<LobbyController, LobbyState> {
+  LobbyControllerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'homeControllerProvider',
+        name: r'lobbyControllerProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$homeControllerHash();
+  String debugGetCreateSourceHash() => _$lobbyControllerHash();
 
   @$internal
   @override
-  HomeController create() => HomeController();
+  LobbyController create() => LobbyController();
 }
 
-String _$homeControllerHash() => r'8fb714de4f50f56ffed5c34cadfb10ce987e101b';
+String _$lobbyControllerHash() => r'3f40988d5150ee439843d3a72f1aefd3be4d29d3';
 
-abstract class _$HomeController extends $AsyncNotifier<HomeState> {
-  FutureOr<HomeState> build();
+abstract class _$LobbyController extends $AsyncNotifier<LobbyState> {
+  FutureOr<LobbyState> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<HomeState>, HomeState>;
+    final ref = this.ref as $Ref<AsyncValue<LobbyState>, LobbyState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<HomeState>, HomeState>,
-              AsyncValue<HomeState>,
+              AnyNotifier<AsyncValue<LobbyState>, LobbyState>,
+              AsyncValue<LobbyState>,
               Object?,
               Object?
             >;

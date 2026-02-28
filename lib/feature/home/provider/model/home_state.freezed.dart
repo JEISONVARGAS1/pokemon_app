@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState {
 
- bool get isLoading; List<PokemonModel> get pokemonList; String get searchQuery; Set<int> get favorites;
+ bool get isLoading; String get searchQuery; Set<int> get favorites; List<PokemonModel> get pokemonList; TextEditingController get searchController;
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other.pokemonList, pokemonList)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&const DeepCollectionEquality().equals(other.favorites, favorites));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&const DeepCollectionEquality().equals(other.favorites, favorites)&&const DeepCollectionEquality().equals(other.pokemonList, pokemonList)&&(identical(other.searchController, searchController) || other.searchController == searchController));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,const DeepCollectionEquality().hash(pokemonList),searchQuery,const DeepCollectionEquality().hash(favorites));
+int get hashCode => Object.hash(runtimeType,isLoading,searchQuery,const DeepCollectionEquality().hash(favorites),const DeepCollectionEquality().hash(pokemonList),searchController);
 
 @override
 String toString() {
-  return 'HomeState(isLoading: $isLoading, pokemonList: $pokemonList, searchQuery: $searchQuery, favorites: $favorites)';
+  return 'HomeState(isLoading: $isLoading, searchQuery: $searchQuery, favorites: $favorites, pokemonList: $pokemonList, searchController: $searchController)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $HomeStateCopyWith<$Res>  {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, List<PokemonModel> pokemonList, String searchQuery, Set<int> favorites
+ bool isLoading, String searchQuery, Set<int> favorites, List<PokemonModel> pokemonList, TextEditingController searchController
 });
 
 
@@ -62,13 +62,14 @@ class _$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? pokemonList = null,Object? searchQuery = null,Object? favorites = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? searchQuery = null,Object? favorites = null,Object? pokemonList = null,Object? searchController = null,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,pokemonList: null == pokemonList ? _self.pokemonList : pokemonList // ignore: cast_nullable_to_non_nullable
-as List<PokemonModel>,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
+as bool,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
 as String,favorites: null == favorites ? _self.favorites : favorites // ignore: cast_nullable_to_non_nullable
-as Set<int>,
+as Set<int>,pokemonList: null == pokemonList ? _self.pokemonList : pokemonList // ignore: cast_nullable_to_non_nullable
+as List<PokemonModel>,searchController: null == searchController ? _self.searchController : searchController // ignore: cast_nullable_to_non_nullable
+as TextEditingController,
   ));
 }
 
@@ -150,10 +151,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  List<PokemonModel> pokemonList,  String searchQuery,  Set<int> favorites)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String searchQuery,  Set<int> favorites,  List<PokemonModel> pokemonList,  TextEditingController searchController)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case HomeStateData() when $default != null:
-return $default(_that.isLoading,_that.pokemonList,_that.searchQuery,_that.favorites);case _:
+return $default(_that.isLoading,_that.searchQuery,_that.favorites,_that.pokemonList,_that.searchController);case _:
   return orElse();
 
 }
@@ -171,10 +172,10 @@ return $default(_that.isLoading,_that.pokemonList,_that.searchQuery,_that.favori
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  List<PokemonModel> pokemonList,  String searchQuery,  Set<int> favorites)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String searchQuery,  Set<int> favorites,  List<PokemonModel> pokemonList,  TextEditingController searchController)  $default,) {final _that = this;
 switch (_that) {
 case HomeStateData():
-return $default(_that.isLoading,_that.pokemonList,_that.searchQuery,_that.favorites);}
+return $default(_that.isLoading,_that.searchQuery,_that.favorites,_that.pokemonList,_that.searchController);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -188,10 +189,10 @@ return $default(_that.isLoading,_that.pokemonList,_that.searchQuery,_that.favori
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  List<PokemonModel> pokemonList,  String searchQuery,  Set<int> favorites)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String searchQuery,  Set<int> favorites,  List<PokemonModel> pokemonList,  TextEditingController searchController)?  $default,) {final _that = this;
 switch (_that) {
 case HomeStateData() when $default != null:
-return $default(_that.isLoading,_that.pokemonList,_that.searchQuery,_that.favorites);case _:
+return $default(_that.isLoading,_that.searchQuery,_that.favorites,_that.pokemonList,_that.searchController);case _:
   return null;
 
 }
@@ -203,17 +204,10 @@ return $default(_that.isLoading,_that.pokemonList,_that.searchQuery,_that.favori
 
 
 class HomeStateData implements HomeState {
-  const HomeStateData({this.isLoading = false, final  List<PokemonModel> pokemonList = const [], this.searchQuery = '', final  Set<int> favorites = const {}}): _pokemonList = pokemonList,_favorites = favorites;
+  const HomeStateData({this.isLoading = false, this.searchQuery = '', final  Set<int> favorites = const {}, final  List<PokemonModel> pokemonList = const [], required this.searchController}): _favorites = favorites,_pokemonList = pokemonList;
   
 
 @override@JsonKey() final  bool isLoading;
- final  List<PokemonModel> _pokemonList;
-@override@JsonKey() List<PokemonModel> get pokemonList {
-  if (_pokemonList is EqualUnmodifiableListView) return _pokemonList;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_pokemonList);
-}
-
 @override@JsonKey() final  String searchQuery;
  final  Set<int> _favorites;
 @override@JsonKey() Set<int> get favorites {
@@ -222,6 +216,14 @@ class HomeStateData implements HomeState {
   return EqualUnmodifiableSetView(_favorites);
 }
 
+ final  List<PokemonModel> _pokemonList;
+@override@JsonKey() List<PokemonModel> get pokemonList {
+  if (_pokemonList is EqualUnmodifiableListView) return _pokemonList;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_pokemonList);
+}
+
+@override final  TextEditingController searchController;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +235,16 @@ $HomeStateDataCopyWith<HomeStateData> get copyWith => _$HomeStateDataCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeStateData&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other._pokemonList, _pokemonList)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&const DeepCollectionEquality().equals(other._favorites, _favorites));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeStateData&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&const DeepCollectionEquality().equals(other._favorites, _favorites)&&const DeepCollectionEquality().equals(other._pokemonList, _pokemonList)&&(identical(other.searchController, searchController) || other.searchController == searchController));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,const DeepCollectionEquality().hash(_pokemonList),searchQuery,const DeepCollectionEquality().hash(_favorites));
+int get hashCode => Object.hash(runtimeType,isLoading,searchQuery,const DeepCollectionEquality().hash(_favorites),const DeepCollectionEquality().hash(_pokemonList),searchController);
 
 @override
 String toString() {
-  return 'HomeState(isLoading: $isLoading, pokemonList: $pokemonList, searchQuery: $searchQuery, favorites: $favorites)';
+  return 'HomeState(isLoading: $isLoading, searchQuery: $searchQuery, favorites: $favorites, pokemonList: $pokemonList, searchController: $searchController)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class $HomeStateDataCopyWith<$Res> implements $HomeStateCopyWith<
   factory $HomeStateDataCopyWith(HomeStateData value, $Res Function(HomeStateData) _then) = _$HomeStateDataCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, List<PokemonModel> pokemonList, String searchQuery, Set<int> favorites
+ bool isLoading, String searchQuery, Set<int> favorites, List<PokemonModel> pokemonList, TextEditingController searchController
 });
 
 
@@ -270,13 +272,14 @@ class _$HomeStateDataCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? pokemonList = null,Object? searchQuery = null,Object? favorites = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? searchQuery = null,Object? favorites = null,Object? pokemonList = null,Object? searchController = null,}) {
   return _then(HomeStateData(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,pokemonList: null == pokemonList ? _self._pokemonList : pokemonList // ignore: cast_nullable_to_non_nullable
-as List<PokemonModel>,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
+as bool,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
 as String,favorites: null == favorites ? _self._favorites : favorites // ignore: cast_nullable_to_non_nullable
-as Set<int>,
+as Set<int>,pokemonList: null == pokemonList ? _self._pokemonList : pokemonList // ignore: cast_nullable_to_non_nullable
+as List<PokemonModel>,searchController: null == searchController ? _self.searchController : searchController // ignore: cast_nullable_to_non_nullable
+as TextEditingController,
   ));
 }
 

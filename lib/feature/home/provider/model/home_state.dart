@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:prokemn_app/feature/home/data/model/pokemon_model.dart';
 
@@ -7,10 +8,12 @@ part 'home_state.freezed.dart';
 sealed class HomeState with _$HomeState {
   const factory HomeState({
     @Default(false) bool isLoading,
-    @Default([]) List<PokemonModel> pokemonList,
     @Default('') String searchQuery,
     @Default({}) Set<int> favorites,
+    @Default([]) List<PokemonModel> pokemonList,
+    required TextEditingController searchController,
   }) = HomeStateData;
 
-  factory HomeState.init() => const HomeState();
+  factory HomeState.init() =>
+      HomeState(searchController: TextEditingController());
 }

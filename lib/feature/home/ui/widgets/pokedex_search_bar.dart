@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 class PokedexSearchBar extends StatelessWidget {
   final TextEditingController controller;
-  final ValueChanged<String> onChanged;
   final VoidCallback onSearchTap;
 
   const PokedexSearchBar({
     super.key,
     required this.controller,
-    required this.onChanged,
     required this.onSearchTap,
   });
 
@@ -27,7 +25,6 @@ class PokedexSearchBar extends StatelessWidget {
               ),
               child: TextField(
                 controller: controller,
-                onChanged: onChanged,
                 decoration: InputDecoration(
                   hintText: 'Procurar Pókemon...',
                   hintStyle: TextStyle(
