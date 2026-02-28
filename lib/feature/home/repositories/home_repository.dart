@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prokemn_app/core/error/exceptions.dart';
 import 'package:prokemn_app/core/model/query_response_model.dart';
 import 'package:prokemn_app/feature/home/data/home_api.dart';
 import 'package:prokemn_app/feature/home/data/home_api_interface.dart';
@@ -27,8 +28,8 @@ class _HomeRepository implements HomeRepository {
     } catch (e) {
       return QueryResponseModel(
         isSuccessful: false,
-        message: e.toString(),
         data: <PokemonModel>[],
+        exceptionCode: ExceptionCode(message: e.toString(), errorType: TypeErrorException.ERROR),
       );
     }
   }

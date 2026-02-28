@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/feature/home/data/home_api_interface.dart';
 import 'package:prokemn_app/feature/home/data/model/pokemon_model.dart';
 

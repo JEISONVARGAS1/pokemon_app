@@ -1,22 +1,29 @@
+import 'package:prokemn_app/core/error/exceptions.dart';
+
 class QueryResponseModel<T> {
   final T? data;
-  final String message;
   final bool isSuccessful;
+  final ExceptionCode exceptionCode;
 
   QueryResponseModel({
     this.data,
-    this.message = "",
+    ExceptionCode? exceptionCode,
     this.isSuccessful = true,
-  });
+  }) : exceptionCode = exceptionCode ??
+          ExceptionCode(
+            message: '',
+            errorType: TypeErrorException.ERROR,
+          );
 
-  QueryResponseModel copyWith({
+  QueryResponseModel<T> copyWith({
     T? data,
-    String? message,
     bool? isSuccessful,
-  }) =>
-      QueryResponseModel(
-        data: data ?? this.data,
-        message: message ?? this.message,
-        isSuccessful: isSuccessful ?? this.isSuccessful,
-      );
+    ExceptionCode? exceptionCode,
+  }) {
+    return QueryResponseModel<T>(
+      data: data ?? this.data,
+      isSuccessful: isSuccessful ?? this.isSuccessful,
+      exceptionCode: exceptionCode ?? this.exceptionCode,
+    );
+  }
 }
