@@ -22,15 +22,16 @@ class FavoritesController extends _$FavoritesController {
       ref.read(globalControllerProvider.notifier);
 
   Future<void> initPage() async {
-    if (state.value!.pokemonList.isEmpty) {
-      await _getPokemonList();
-    }
+    if (state.value!.pokemonList.isEmpty) _getPokemonList();
   }
 
   Future<void> _getPokemonList() async {
     ref.listen(globalControllerProvider, (previous, next) {
       final pokemonList = next.value!.pokemonListFavorites;
-      _setState(state.value!.copyWith(pokemonList: pokemonList));
+      final current = pokemonList.map((p) => p.id).toSet();
+      _setState(
+        state.value!.copyWith(pokemonList: pokemonList, favorites: current),
+      );
     }, fireImmediately: true);
   }
 
@@ -40,17 +41,14 @@ class FavoritesController extends _$FavoritesController {
 
   void toggleFavorite(int pokemonId) {
     final current = state.value!.favorites.toSet();
-    if (current.contains(pokemonId)) {
-      current.remove(pokemonId);
-    } else {
-      current.add(pokemonId);
-    }
 
-    final pokemonList = current
-        .map((pokemonId) => state.value!.pokemonList[pokemonId - 1])
-        .toList();
-    globalController.savePokemonListFavorites(pokemonList);
-    _setState(state.value!.copyWith(favorites: current));
+    current.remove(pokemonId);
+
+    final pokemon = state.value!.pokemonList.firstWhere(
+      (p) => p.id == pokemonId,
+    );
+
+    globalController.removePokemonListFavorites(pokemon);
   }
 
   List<PokemonModel> filterPokemon(List<PokemonModel> list, String query) {

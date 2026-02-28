@@ -20,13 +20,27 @@ class HomeController extends _$HomeController {
   }
 
   HomeRepository get repository => ref.read(homeRepositoryProvider);
-  GlobalController get globalController => ref.read(globalControllerProvider.notifier);
+  GlobalController get globalController =>
+      ref.read(globalControllerProvider.notifier);
 
   Future<void> initPage() async {
     if (state.value!.pokemonList.isEmpty) {
       _setState(state.value!.copyWith(isLoading: true));
       await _getPokemonList();
+      _listenFavorites();
     }
+  }
+
+  void _listenFavorites() {
+    ref.listen(globalControllerProvider, (previous, next) {
+      final currentLength = state.value!.pokemonList.length;
+      final nextLength = next.value!.pokemonListFavorites.length;
+
+      if (currentLength == nextLength) return;
+      final pokemonList = next.value!.pokemonListFavorites;
+      final current = pokemonList.map((p) => p.id).toSet();
+      _setState(state.value!.copyWith(favorites: current));
+    });
   }
 
   Future<void> _getPokemonList() async {
@@ -55,8 +69,8 @@ class HomeController extends _$HomeController {
     final pokemonList = current
         .map((pokemonId) => state.value!.pokemonList[pokemonId - 1])
         .toList();
-    globalController.savePokemonListFavorites(pokemonList);
     _setState(state.value!.copyWith(favorites: current));
+    globalController.savePokemonListFavorites(pokemonList);
   }
 
   List<PokemonModel> filterPokemon(List<PokemonModel> list, String query) {
