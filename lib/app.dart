@@ -6,10 +6,11 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/material.dart';
-import 'package:prokemn_app/core/initializer/onstart_widget.dart';
 import 'package:prokemn_app/router.dart';
 import 'package:go_router/go_router.dart';
+import 'package:prokemn_app/uikit/iatros_ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prokemn_app/core/initializer/onstart_widget.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -40,6 +41,7 @@ class _AppState extends ConsumerState<App> {
       builder: (context) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
           routerConfig: routes,
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,

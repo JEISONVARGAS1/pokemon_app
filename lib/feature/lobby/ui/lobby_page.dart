@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/core/widget/loading_page.dart';
-import 'package:prokemn_app/feature/favorites/ui/favorites_page.dart';
 import 'package:prokemn_app/feature/home/ui/home_page.dart';
-import 'package:prokemn_app/feature/home/ui/widgets/pokedex_bottom_nav.dart';
+import 'package:prokemn_app/feature/favorites/ui/favorites_page.dart';
 import 'package:prokemn_app/feature/lobby/provider/lobby_controller.dart';
+import 'package:prokemn_app/feature/home/ui/widgets/pokedex_bottom_nav.dart';
 
 class LobbyPage extends ConsumerStatefulWidget {
   const LobbyPage({super.key});
