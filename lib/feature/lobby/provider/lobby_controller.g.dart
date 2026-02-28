@@ -33,7 +33,7 @@ final class LobbyControllerProvider
   LobbyController create() => LobbyController();
 }
 
-String _$lobbyControllerHash() => r'3f40988d5150ee439843d3a72f1aefd3be4d29d3';
+String _$lobbyControllerHash() => r'2ea016535e21773a30d4861fcffe69068fa49c5a';
 
 abstract class _$LobbyController extends $AsyncNotifier<LobbyState> {
   FutureOr<LobbyState> build();

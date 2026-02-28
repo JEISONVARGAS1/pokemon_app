@@ -1,44 +1,37 @@
 import 'dart:async';
-import 'package:prokemn_app/core/data/provider/global_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:prokemn_app/core/data/provider/global_controller.dart';
 import 'package:prokemn_app/feature/home/data/model/pokemon_model.dart';
-import 'package:prokemn_app/feature/home/provider/model/home_state.dart';
-import 'package:prokemn_app/feature/home/repositories/home_repository.dart';
+import 'package:prokemn_app/feature/favorites/provider/model/favorites_state.dart';
 
-part 'home_controller.g.dart';
+part 'favorites_controller.g.dart';
 
 @riverpod
-class HomeController extends _$HomeController {
+class FavoritesController extends _$FavoritesController {
   @override
-  FutureOr<HomeState> build() {
+  FutureOr<FavoritesState> build() {
     ref.keepAlive();
     ref.onDispose(() {
       state.value!.searchController.dispose();
     });
 
-    return HomeState.init();
+    return FavoritesState.init();
   }
 
-  HomeRepository get repository => ref.read(homeRepositoryProvider);
-  GlobalController get globalController => ref.read(globalControllerProvider.notifier);
+  GlobalController get globalController =>
+      ref.read(globalControllerProvider.notifier);
 
   Future<void> initPage() async {
     if (state.value!.pokemonList.isEmpty) {
-      _setState(state.value!.copyWith(isLoading: true));
       await _getPokemonList();
     }
   }
 
   Future<void> _getPokemonList() async {
-    final result = await repository.fetchPokemonList(limit: 20, offset: 0);
-
-    if (result.isSuccessful) {
-      _setState(
-        state.value!.copyWith(pokemonList: result.data!, isLoading: false),
-      );
-    } else {
-      _setState(state.value!.copyWith(isLoading: false));
-    }
+    ref.listen(globalControllerProvider, (previous, next) {
+      final pokemonList = next.value!.pokemonListFavorites;
+      _setState(state.value!.copyWith(pokemonList: pokemonList));
+    }, fireImmediately: true);
   }
 
   void setSearchQuery(String query) {
@@ -52,6 +45,7 @@ class HomeController extends _$HomeController {
     } else {
       current.add(pokemonId);
     }
+
     final pokemonList = current
         .map((pokemonId) => state.value!.pokemonList[pokemonId - 1])
         .toList();
@@ -75,5 +69,5 @@ class HomeController extends _$HomeController {
     }).toList();
   }
 
-  void _setState(HomeState newState) => state = AsyncValue.data(newState);
+  void _setState(FavoritesState newState) => state = AsyncValue.data(newState);
 }
