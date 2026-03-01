@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:prokemn_app/feature/profile/ui/widget/button_linkeding.dart';
-import 'package:prokemn_app/feature/profile/ui/widget/my_profile_card.dart';
-import 'package:prokemn_app/feature/profile/ui/widget/trainer_information.dart';
-import 'package:prokemn_app/feature/profile/ui/widget/trainer_skills.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prokemn_app/feature/profile/ui/widget/experience.dart';
 import 'package:prokemn_app/feature/profile/ui/widget/header_card.dart';
+import 'package:prokemn_app/feature/profile/ui/widget/trainer_skills.dart';
+import 'package:prokemn_app/feature/profile/ui/widget/my_profile_card.dart';
+import 'package:prokemn_app/feature/profile/ui/widget/button_linkeding.dart';
+import 'package:prokemn_app/feature/profile/ui/widget/trainer_information.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
@@ -14,14 +15,16 @@ class ProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Text('Profile'),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: AppSpacing.xxl),
-            const SizedBox(height: AppSpacing.xxl),
             MyProfileCard(),
             const SizedBox(height: AppSpacing.md),
             HeaderCard(
@@ -37,7 +40,13 @@ class ProfilePage extends ConsumerWidget {
             HeaderCard(
               title: 'BATTLE EXPERIENCE',
               headerColor: AppColors.success.withValues(alpha: 0.5),
-              child: const _BattleExperienceContent(),
+              child: Experience(
+                items: [
+                  'FlutterLab | 4.8 years',
+                  'GraciaLab | 1 year',
+                  'INTEREDES S.A.S. | 1.3 years',
+                ],
+              ),
             ),
             const SizedBox(height: AppSpacing.md),
             HeaderCard(
@@ -74,40 +83,5 @@ class ProfilePage extends ConsumerWidget {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     }
-  }
-}
-
-class _BattleExperienceContent extends StatelessWidget {
-  const _BattleExperienceContent();
-
-  @override
-  Widget build(BuildContext context) {
-    final items = [
-      'FlutterLab | 4.8 years',
-      'GraciaLab | 1 year',
-      'INTEREDES S.A.S. | 1.3 years',
-    ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: items
-          .map(
-            (e) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 14,
-                    color: Colors.orange.shade700,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(child: Text(e, style: AppTypography.bodyMedium)),
-                ],
-              ),
-            ),
-          )
-          .toList(),
-    );
   }
 }
