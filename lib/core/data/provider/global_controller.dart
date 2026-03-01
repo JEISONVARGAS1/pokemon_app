@@ -24,5 +24,22 @@ class GlobalController extends _$GlobalController {
     _setState(currentState.copyWith(pokemonListFavorites: pokemonList));
   }
 
+  void toggleFavorite(PokemonModel pokemon) {
+    final currentState = state.value ?? GlobalState.init();
+    final pokemonList = currentState.pokemonListFavorites.toList();
+    final index = pokemonList.indexWhere((p) => p.id == pokemon.id);
+    if (index >= 0) {
+      pokemonList.removeAt(index);
+    } else {
+      pokemonList.add(pokemon);
+    }
+    _setState(currentState.copyWith(pokemonListFavorites: pokemonList));
+  }
+
+  bool isFavorite(int pokemonId) {
+    final currentState = state.value ?? GlobalState.init();
+    return currentState.pokemonListFavorites.any((p) => p.id == pokemonId);
+  }
+
   void _setState(GlobalState newState) => state = AsyncValue.data(newState);
 }

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:go_router/go_router.dart';
+import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/core/widget/loading_page.dart';
 import 'package:prokemn_app/core/widget/pokemon_list.dart';
 import 'package:prokemn_app/feature/home/ui/widgets/pokedex_search_bar.dart';
 import 'package:prokemn_app/feature/favorites/provider/favorites_controller.dart';
-import 'package:prokemn_app/uikit/iatros_ui_kit.dart';
 
 class FavoritesPage extends ConsumerStatefulWidget {
   const FavoritesPage({super.key});
@@ -57,6 +58,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
               child: PokemonList(
                 favorites: state.favorites,
                 onFavoriteTap: provider.toggleFavorite,
+                onPokemonTap: (p) => context.push('/pokemon/${p.id}'),
                 pokemon: provider.filterPokemon(
                   state.pokemonList,
                   state.searchQuery,

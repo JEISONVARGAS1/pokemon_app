@@ -13,7 +13,11 @@ Color getTypeBorderColor(String typeKey) {
   return PokemonType.fromString(typeKey)?.borderColor ?? Colors.grey.shade700;
 }
 
+IconData getTypeIcon(String typeKey) {
+  return PokemonType.fromString(typeKey)?.icon ?? Icons.circle;
+}
+
 Color getCardBackgroundColor(List<String> types) {
   if (types.isEmpty) return const Color(0xFFF5F5F5);
-  return getTypeColor(types.first).withValues(alpha: 0.35);
+  return getTypeColor(types.first);
 }

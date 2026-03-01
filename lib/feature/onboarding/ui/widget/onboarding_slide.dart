@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prokemn_app/uikit/iatros_ui_kit.dart';
+import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 
 class OnboardingSlide extends StatelessWidget {
   final String header;

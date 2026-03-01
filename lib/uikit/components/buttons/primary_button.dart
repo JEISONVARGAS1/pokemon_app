@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../utils/app_colors.dart';
-import '../../utils/app_spacing.dart';
 import '../../utils/app_typography.dart';
 
 /// Botón primario con estilo consistente.

@@ -6,12 +6,14 @@ class PokemonList extends StatelessWidget {
   final Set<int> favorites;
   final List<PokemonModel> pokemon;
   final void Function(int id) onFavoriteTap;
+  final void Function(PokemonModel pokemon)? onPokemonTap;
 
   const PokemonList({
     super.key,
     required this.pokemon,
     required this.favorites,
     required this.onFavoriteTap,
+    this.onPokemonTap,
   });
 
   @override
@@ -47,6 +49,7 @@ class PokemonList extends StatelessWidget {
             pokemon: p,
             isFavorite: favorites.contains(p.id),
             onFavoriteTap: () => onFavoriteTap(p.id),
+            onTap: onPokemonTap != null ? () => onPokemonTap!(p) : null,
           ),
         );
       },

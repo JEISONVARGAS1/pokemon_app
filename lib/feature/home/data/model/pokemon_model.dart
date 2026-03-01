@@ -1,8 +1,10 @@
+import 'package:prokemn_app/core/enum/type_enume.dart';
+
 class PokemonModel {
   final int id;
   final String name;
   final String imageUrl;
-  final List<String> types;
+  final List<PokemonType> types;
 
   const PokemonModel({
     required this.id,
@@ -33,7 +35,7 @@ class PokemonModel {
       id: id,
       name: json['name'] as String? ?? '',
       imageUrl: imageUrl,
-      types: types,
+      types: types.map((t) => PokemonType.fromString(t) ?? PokemonType.normal).toList(),
     );
   }
 }

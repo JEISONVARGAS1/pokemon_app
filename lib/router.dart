@@ -5,6 +5,7 @@ import 'package:prokemn_app/core/widget/page_not_found.dart';
 import 'package:prokemn_app/feature/home/ui/home_page.dart';
 import 'package:prokemn_app/feature/lobby/ui/lobby_page.dart';
 import 'package:prokemn_app/feature/onboarding/ui/onboarding_page.dart';
+import 'package:prokemn_app/feature/pokemon_description/ui/pokemon_description_page.dart';
 import 'package:prokemn_app/feature/splash/ui/splash_page.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -34,6 +35,16 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         name: 'home',
         path: '/home',
         pageBuilder: (context, state) => buildPageWithTransition(HomePage()),
+      ),
+      GoRoute(
+        name: 'pokemon-description',
+        path: '/pokemon/:id',
+        pageBuilder: (context, state) {
+          final id = int.tryParse(state.pathParameters['id'] ?? '1') ?? 1;
+          return buildPageWithTransition(
+            PokemonDescriptionPage(pokemonId: id),
+          );
+        },
       ),
       GoRoute(
         name: '404',

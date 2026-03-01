@@ -33,7 +33,7 @@ final class GlobalControllerProvider
   GlobalController create() => GlobalController();
 }
 
-String _$globalControllerHash() => r'78fa46f3ecdaa907338c79743c6ba631aeb142fb';
+String _$globalControllerHash() => r'f77f3bdbee8db4cb1c810f83c9b6a4187e7c5e73';
 
 abstract class _$GlobalController extends $AsyncNotifier<GlobalState> {
   FutureOr<GlobalState> build();

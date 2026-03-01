@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:prokemn_app/core/widget/loading_page.dart';
 import 'package:prokemn_app/core/widget/pokemon_list.dart';
 import 'package:prokemn_app/feature/home/provider/home_controller.dart';
 import 'package:prokemn_app/feature/home/ui/widgets/pokedex_search_bar.dart';
-import 'package:prokemn_app/uikit/iatros_ui_kit.dart';
+import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -59,6 +60,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               child: PokemonList(
                 favorites: state.favorites,
                 onFavoriteTap: provider.toggleFavorite,
+                onPokemonTap: (p) => context.push('/pokemon/${p.id}'),
                 pokemon: provider.filterPokemon(
                   state.pokemonList,
                   state.searchQuery,

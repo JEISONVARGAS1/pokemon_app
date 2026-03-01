@@ -34,7 +34,7 @@ class AppTypography {
 
   // Button
   static TextStyle get button =>
-      _base(fontSize: 14, fontWeight: FontWeight.w600);
+      _base(fontSize: 16, fontWeight: FontWeight.w600);
   static TextStyle get buttonSecondary =>
       _base(fontSize: 14, fontWeight: FontWeight.w500);
 
