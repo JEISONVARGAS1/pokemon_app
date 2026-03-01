@@ -25,7 +25,11 @@ class HomeController extends _$HomeController {
 
   Future<void> initPage() async {
     if (state.value!.pokemonList.isEmpty) {
-      _setState(state.value!.copyWith(isLoading: true));
+      _setState(state.value!.copyWith(
+        isLoading: true,
+        page: 0,
+        hasReachedEnd: false,
+      ));
       await _getPokemonList();
       _listenFavorites();
     }
@@ -43,9 +47,13 @@ class HomeController extends _$HomeController {
     });
   }
 
+  static const int _pageSize = 20;
+
   Future<void> _getPokemonList() async {
-    _setState(state.value!.copyWith(isLoading: true));
-    final result = await repository.fetchPokemonList(limit: 20, offset: 0);
+    final result = await repository.fetchPokemonList(
+      limit: _pageSize,
+      offset: 0,
+    );
 
     if (result.isSuccessful) {
       _setState(
@@ -53,6 +61,8 @@ class HomeController extends _$HomeController {
           isLoading: false,
           errorMessage: '',
           pokemonList: result.data!,
+          page: 0,
+          hasReachedEnd: result.data!.length < _pageSize,
         ),
       );
     } else {
@@ -61,6 +71,42 @@ class HomeController extends _$HomeController {
           isLoading: false,
           errorMessage:
               'No pudimos cargar la información en este momento. Verifica tu conexión o intenta nuevamente más tarde.',
+        ),
+      );
+    }
+  }
+
+  Future<void> loadNextPage() async {
+    final currentState = state.value!;
+    if (currentState.isLoadingNextPage ||
+        currentState.pokemonList.isEmpty ||
+        currentState.hasReachedEnd) {
+      return;
+    }
+
+    _setState(currentState.copyWith(isLoadingNextPage: true));
+    final nextPage = currentState.page + 1;
+    final result = await repository.fetchPokemonList(
+      limit: _pageSize,
+      offset: nextPage * _pageSize,
+    );
+
+    if (result.isSuccessful && result.data!.isNotEmpty) {
+      final newList = [...currentState.pokemonList, ...result.data!];
+      final hasReachedEnd = result.data!.length < _pageSize;
+      _setState(
+        state.value!.copyWith(
+          pokemonList: newList,
+          page: nextPage,
+          isLoadingNextPage: false,
+          hasReachedEnd: hasReachedEnd,
+        ),
+      );
+    } else {
+      _setState(
+        state.value!.copyWith(
+          isLoadingNextPage: false,
+          hasReachedEnd: true,
         ),
       );
     }

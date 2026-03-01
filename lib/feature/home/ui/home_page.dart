@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:prokemn_app/core/extension/context_extension.dart';
 import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prokemn_app/l10n/app_localizations.dart';
 import 'package:prokemn_app/core/widget/loading_page.dart';
 import 'package:prokemn_app/core/widget/pokemon_list.dart';
 import 'package:prokemn_app/feature/home/provider/home_controller.dart';
@@ -18,12 +17,33 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback(
       (_) => ref.read(homeControllerProvider.notifier).initPage(),
     );
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final state = ref.read(homeControllerProvider).value;
+    if (state == null || state.searchQuery.isNotEmpty) return;
+
+    final position = _scrollController.position;
+    if (position.maxScrollExtent > 0 &&
+        position.pixels >= position.maxScrollExtent * 0.7) {
+      ref.read(homeControllerProvider.notifier).loadNextPage();
+    }
   }
 
   @override
@@ -60,6 +80,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             Expanded(
               child: PokemonList(
+                scrollController: _scrollController,
                 favorites: state.favorites,
                 onFavoriteTap: provider.toggleFavorite,
                 onPokemonTap: (p) => context.push('/pokemon/${p.id}'),
