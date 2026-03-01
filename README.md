@@ -4,13 +4,11 @@ Aplicación Flutter de Pokédex con arquitectura limpia.
 
 ## Imágenes de la aplicación
 
-<p align="center">
-  <img src="assets/readme_image/Screenshot%202026-03-01%20at%202.26.52%20PM.png" width="200" alt="Captura 1" />
-  <img src="assets/readme_image/Screenshot%202026-03-01%20at%202.27.16%20PM.png" width="200" alt="Captura 2" />
-  <img src="assets/readme_image/Screenshot%202026-03-01%20at%202.27.24%20PM.png" width="200" alt="Captura 3" />
-  <img src="assets/readme_image/Screenshot%202026-03-01%20at%202.27.36%20PM.png" width="200" alt="Captura 4" />
-  <img src="assets/readme_image/Screenshot%202026-03-01%20at%202.28.23%20PM.png" width="200" alt="Captura 5" />
-</p>
+![Captura 1](<assets/readme_image/Screenshot 2026-03-01 at 2.26.52 PM.png>)
+![Captura 2](<assets/readme_image/Screenshot 2026-03-01 at 2.27.16 PM.png>)
+![Captura 3](<assets/readme_image/Screenshot 2026-03-01 at 2.27.24 PM.png>)
+![Captura 4](<assets/readme_image/Screenshot 2026-03-01 at 2.27.36 PM.png>)
+![Captura 5](<assets/readme_image/Screenshot 2026-03-01 at 2.28.23 PM.png>)
 
 ## Cómo arrancar el proyecto
 
