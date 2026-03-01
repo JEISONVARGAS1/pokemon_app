@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/core/initializer/onstart_widget.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:prokemn_app/l10n/app_localizations.dart';
 
 class App extends ConsumerWidget {
   const App({super.key});
@@ -29,16 +29,16 @@ class App extends ConsumerWidget {
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
           routerConfig: routes,
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('es', 'ES'),
-            Locale('en', 'US'),
-          ],
-          locale: const Locale('es', 'ES'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          localeResolutionCallback: (locale, supportedLocales) {
+            for (final supported in supportedLocales) {
+              if (supported.languageCode == locale?.languageCode) {
+                return supported;
+              }
+            }
+            return const Locale('es');
+          },
           builder: (context, child) => Initializer(
             onReady: child!,
             onLoading: const Scaffold(
@@ -64,14 +64,14 @@ class AppErrorWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Oups!',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          Text(
+            AppLocalizations.of(context)?.errorOops ?? 'Oops!',
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Sorry, Something went wrong',
-            style: TextStyle(color: Colors.white),
+          Text(
+            AppLocalizations.of(context)?.errorSomethingWentWrong ?? 'Sorry, something went wrong',
+            style: const TextStyle(color: Colors.white),
           ),
           const SizedBox(height: 8),
           Text(

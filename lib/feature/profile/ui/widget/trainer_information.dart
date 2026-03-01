@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prokemn_app/uikit/utils/app_colors.dart';
 import 'package:prokemn_app/uikit/utils/app_typography.dart';
+import 'package:prokemn_app/core/extension/context_extension.dart';
 
 class TrainerInformation extends StatelessWidget {
   final String name;
@@ -16,14 +17,15 @@ class TrainerInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _InfoRow(label: 'Name:', value: name),
+        _InfoRow(label: context.l10n.labelName, value: name),
         const SizedBox(height: 8),
-        _InfoRow(label: 'Role:', value: role),
+        _InfoRow(label: context.l10n.labelRole, value: role),
         const SizedBox(height: 8),
-        _InfoRow(label: 'Location:', value: location),
+        _InfoRow(label: context.l10n.labelLocation, value: location),
       ],
     );
   }

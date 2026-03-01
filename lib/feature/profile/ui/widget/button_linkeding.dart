@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prokemn_app/core/extension/context_extension.dart';
 import 'package:prokemn_app/uikit/utils/app_colors.dart';
 import 'package:prokemn_app/uikit/utils/app_typography.dart';
 
@@ -31,7 +32,7 @@ class ButtonLinkeding extends StatelessWidget {
             Icon(Icons.link, color: Colors.white, size: 24),
             const SizedBox(width: 12),
             Text(
-              'VIEW PROFILE ON LINKEDIN',
+              context.l10n.viewProfileOnLinkedin,
               style: AppTypography.button.copyWith(
                 color: Colors.white,
                 letterSpacing: 0.5,

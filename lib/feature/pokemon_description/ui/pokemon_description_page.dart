@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/core/widget/loading_page.dart';
+import 'package:prokemn_app/core/extension/context_extension.dart';
 import 'package:prokemn_app/feature/pokemon_description/ui/widgets/type_chip.dart';
 import 'package:prokemn_app/feature/pokemon_description/ui/widgets/stats_grid.dart';
 import 'package:prokemn_app/feature/pokemon_description/ui/widgets/custom_header.dart';
@@ -124,7 +125,7 @@ class _PokemonDescriptionPageState
                           const SizedBox(height: AppSpacing.xl),
                           GenderSection(detail: state.detail),
                           const SizedBox(height: AppSpacing.xl),
-                          Text('Debilidades', style: AppTypography.h4),
+                          Text(context.l10n.weaknesses, style: AppTypography.h4),
                           const SizedBox(height: AppSpacing.md),
                           Wrap(
                             spacing: AppSpacing.sm,

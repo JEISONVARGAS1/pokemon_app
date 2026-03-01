@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prokemn_app/core/extension/context_extension.dart';
 import 'package:prokemn_app/feature/profile/ui/widget/experience.dart';
 import 'package:prokemn_app/feature/profile/ui/widget/header_card.dart';
 import 'package:prokemn_app/feature/profile/ui/widget/trainer_skills.dart';
@@ -17,7 +18,7 @@ class ProfilePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Profile'),
+        title: Text(context.l10n.profileTitle),
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -28,7 +29,7 @@ class ProfilePage extends ConsumerWidget {
             MyProfileCard(),
             const SizedBox(height: AppSpacing.md),
             HeaderCard(
-              title: 'TRAINER INFO',
+              title: context.l10n.trainerInfo,
               headerColor: AppColors.primaryDark.withValues(alpha: 0.5),
               child: const TrainerInformation(
                 name: 'Jeison Vargas',
@@ -38,7 +39,7 @@ class ProfilePage extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.md),
             HeaderCard(
-              title: 'BATTLE EXPERIENCE',
+              title: context.l10n.battleExperience,
               headerColor: AppColors.success.withValues(alpha: 0.5),
               child: Experience(
                 items: [
@@ -50,7 +51,7 @@ class ProfilePage extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.md),
             HeaderCard(
-              title: 'TRAINER SKILLS',
+              title: context.l10n.trainerSkills,
               headerColor: AppColors.blueLight.withValues(alpha: 0.5),
               child: const TrainerSkillsContent(
                 skills: [

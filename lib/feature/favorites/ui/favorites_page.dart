@@ -5,6 +5,7 @@ import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/core/widget/loading_page.dart';
 import 'package:prokemn_app/core/widget/pokemon_list.dart';
+import 'package:prokemn_app/core/extension/context_extension.dart';
 import 'package:prokemn_app/feature/home/ui/widgets/pokedex_search_bar.dart';
 import 'package:prokemn_app/feature/favorites/provider/favorites_controller.dart';
 
@@ -29,19 +30,19 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
     final state = ref.watch(favoritesControllerProvider).value!;
     final provider = ref.read(favoritesControllerProvider.notifier);
 
-        if (state.pokemonList.isEmpty) {
+    if (state.pokemonList.isEmpty) {
       return InformationView(
-        isLoading: state.isLoading, 
+        isLoading: state.isLoading,
         image: Image.asset('assets/image/error.png'),
-        title: "No has marcado ningún Pokémon como favorito",
-        description: "Haz clic en el ícono de corazón de tus Pokémon favoritos y aparecerán aquí.",
+        title: context.l10n.noFavoritesTitle,
+        description: context.l10n.noFavoritesDescription,
       );
     }
 
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
-        title: Text('Favoritos'),
+        title: Text(context.l10n.favorites),
         surfaceTintColor: Colors.white,
         backgroundColor: Colors.grey.shade50,
       ),

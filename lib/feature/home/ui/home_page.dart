@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:prokemn_app/core/extension/context_extension.dart';
+import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prokemn_app/l10n/app_localizations.dart';
 import 'package:prokemn_app/core/widget/loading_page.dart';
 import 'package:prokemn_app/core/widget/pokemon_list.dart';
 import 'package:prokemn_app/feature/home/provider/home_controller.dart';
 import 'package:prokemn_app/feature/home/ui/widgets/pokedex_search_bar.dart';
-import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -31,10 +33,10 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     if (state.errorMessage.isNotEmpty) {
       return InformationView(
-        buttonLabel: "Reintentar",
         isLoading: state.isLoading, 
-        title: "Algo salió mal...",
+        buttonLabel: context.l10n.retry,
         description: state.errorMessage,
+        title: context.l10n.somethingWentWrong,
         image: Image.asset('assets/image/error.png'),
         onButtonPressed: () => provider.initPage(),
       );
@@ -43,7 +45,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
-        title: Text('Pokédex'),
+        title: Text(context.l10n.pokedex),
         surfaceTintColor: Colors.white,
         backgroundColor: Colors.grey.shade50,
       ),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
-import 'package:prokemn_app/feature/onboarding/ui/widget/onboarding_slide.dart';
+import 'package:prokemn_app/core/extension/context_extension.dart';
 import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prokemn_app/l10n/app_localizations.dart';
+import 'package:prokemn_app/feature/onboarding/ui/widget/onboarding_slide.dart';
 import 'package:prokemn_app/feature/onboarding/provider/onboarding_controller.dart';
 
 class OnboardingPage extends ConsumerStatefulWidget {
@@ -101,19 +103,17 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage>
                       physics: const BouncingScrollPhysics(),
                       children: [
                         OnboardingSlide(
-                          header: 'Onboarding 01',
                           imagePath: 'assets/image/ombordin1.png',
-                          title: 'Todos los Pokémon en\nun solo lugar',
-                          description:
-                              'Accede a una amplia lista de Pokémon de todas las generaciones creadas por Nintendo.',
+                          title: context.l10n.onboarding01Title,
+                          header: context.l10n.onboarding01Header,
+                          description: context.l10n.onboarding01Description,
                           onPressed: _onNextPressed,
                         ),
                         OnboardingSlide(
-                          header: 'Onboarding 02',
                           imagePath: 'assets/image/ombordin2.png',
-                          title: 'Mantén tu Pokédex\nactualizada',
-                          description:
-                              'Regístrate y guarda tu perfil, Pokémon favoritos, configuraciones y mucho más en la aplicación.',
+                          title: context.l10n.onboarding02Title,
+                          header: context.l10n.onboarding02Header,
+                          description: context.l10n.onboarding02Description,
                           onPressed: _onNextPressed,
                         ),
                       ],
@@ -133,8 +133,8 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage>
                         label:
                             state.currentPageIndex ==
                                 OnboardingController.totalPages - 1
-                            ? 'Empecemos'
-                            : 'Continuar',
+                            ? context.l10n.onboardingButtonStart
+                            : context.l10n.onboardingButtonContinue,
                         onPressed: _onNextPressed,
                       ),
                     ],

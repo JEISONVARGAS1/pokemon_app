@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:prokemn_app/core/extension/context_extension.dart';
+import 'package:prokemn_app/l10n/app_localizations.dart';
 import 'package:prokemn_app/uikit/utils/app_colors.dart';
 import 'package:prokemn_app/uikit/utils/app_typography.dart';
 
@@ -45,8 +47,14 @@ class MyProfileCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text('Age: 26', style: AppTypography.bodyMedium),
-                    Text('Location: Colombia', style: AppTypography.bodyMedium),
+                    Text(
+                      '${context.l10n.labelAge}: 26',
+                      style: AppTypography.bodyMedium,
+                    ),
+                    Text(
+                      '${context.l10n.labelLocation} Colombia',
+                      style: AppTypography.bodyMedium,
+                    ),
                   ],
                 ),
               ),

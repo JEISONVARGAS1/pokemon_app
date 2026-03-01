@@ -7,7 +7,7 @@ import 'package:prokemn_app/feature/favorites/ui/favorites_page.dart';
 import 'package:prokemn_app/feature/lobby/provider/lobby_controller.dart';
 import 'package:prokemn_app/feature/home/ui/widgets/pokedex_bottom_nav.dart';
 import 'package:prokemn_app/feature/profile/ui/profile_page.dart';
-import 'package:prokemn_app/feature/regions/ui/home_page.dart';
+import 'package:prokemn_app/feature/regions/ui/regions_page.dart';
 
 class LobbyPage extends ConsumerStatefulWidget {
   const LobbyPage({super.key});
