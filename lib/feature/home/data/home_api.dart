@@ -1,13 +1,8 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/feature/home/data/home_api_interface.dart';
-import 'package:prokemn_app/feature/home/data/model/pokemon_model.dart';
+import 'package:prokemn_app/core/model/pokemon_model.dart';
 
 class _HomeApi extends HomeApiInterface {
-  static const _baseUrl = 'https://pokeapi.co/api/v2';
-
   _HomeApi();
 
   @override
@@ -15,39 +10,24 @@ class _HomeApi extends HomeApiInterface {
     int limit = 20,
     int offset = 0,
   }) async {
-    final listResponse = await http.get(
-      Uri.parse('$_baseUrl/pokemon?limit=$limit&offset=$offset'),
-    );
+    final res = await get(urlSpecific: 'pokemon?limit=$limit&offset=$offset');
 
-    if (listResponse.statusCode != 200) {
-      throw Exception('Error al cargar Pokémon');
+    if (res.isSuccessful) {
+      final results = res.data["results"]!;
+      List<String> urls = List<String>.from(results.map((item) => item["url"]));
+      List<PokemonModel> pokemonList =
+          await Future.wait(
+            urls.map((url) => get(urlSpecific: url, isCustomUrl: true)),
+          ).then(
+            (responses) => responses
+                .map((response) => PokemonModel.fromJson(response.data))
+                .toList(),
+          );
+
+      return pokemonList;
     }
-
-    final listData = jsonDecode(listResponse.body) as Map<String, dynamic>;
-    final results = listData['results'] as List<dynamic>? ?? [];
-
-    final urls = <String>[];
-    for (final item in results) {
-      final url = item['url'] as String?;
-      if (url != null) urls.add(url);
-    }
-
-    // Peticiones en paralelo para cargar más rápido
-    final responses = await Future.wait(
-      urls.map((url) => http.get(Uri.parse(url))),
-    );
-
-    final pokemonList = <PokemonModel>[];
-    for (final detailResponse in responses) {
-      if (detailResponse.statusCode != 200) continue;
-      final detailData = jsonDecode(detailResponse.body) as Map<String, dynamic>;
-      pokemonList.add(PokemonModel.fromJson(detailData));
-    }
-
-    return pokemonList;
+    return [];
   }
 }
 
-final homeApiProvider = Provider<HomeApiInterface>(
-  (Ref ref) => _HomeApi(),
-);
+final homeApiProvider = Provider<HomeApiInterface>((Ref ref) => _HomeApi());

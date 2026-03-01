@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:prokemn_app/feature/home/data/model/pokemon_model.dart';
+import 'package:prokemn_app/core/model/pokemon_model.dart';
 
 part 'global_state.freezed.dart';
 

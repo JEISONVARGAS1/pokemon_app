@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
-import 'package:prokemn_app/feature/pokemon_description/data/model/pokemon_detail_model.dart';
+import 'package:prokemn_app/core/model/pokemon_detail_model.dart';
 
 class GenderSection extends StatelessWidget {
   const GenderSection({super.key, required this.detail});

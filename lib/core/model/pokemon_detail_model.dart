@@ -1,4 +1,4 @@
-import 'package:prokemn_app/feature/home/data/model/pokemon_model.dart';
+import 'package:prokemn_app/core/model/pokemon_model.dart';
 
 class PokemonDetailModel {
   final PokemonModel pokemon;

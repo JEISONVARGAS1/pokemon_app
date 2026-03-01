@@ -57,7 +57,7 @@ final class PokemonDescriptionControllerProvider
 }
 
 String _$pokemonDescriptionControllerHash() =>
-    r'9b4536b230a752d26c4d562782182282eeab3c18';
+    r'8c53912e7555407964c006a91fb0357fbc515582';
 
 final class PokemonDescriptionControllerFamily extends $Family
     with

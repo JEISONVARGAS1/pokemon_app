@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/feature/home/data/home_api_interface.dart';
-import 'package:prokemn_app/feature/home/data/model/pokemon_model.dart';
+import 'package:prokemn_app/core/model/pokemon_model.dart';
 
 class _HomeApi extends HomeApiInterface {
   static const _baseUrl = 'https://pokeapi.co/api/v2';

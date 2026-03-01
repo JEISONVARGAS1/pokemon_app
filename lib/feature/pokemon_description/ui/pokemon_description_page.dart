@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,6 +23,17 @@ class PokemonDescriptionPage extends ConsumerStatefulWidget {
 
 class _PokemonDescriptionPageState
     extends ConsumerState<PokemonDescriptionPage> {
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      final pokemonRiverpod = pokemonDescriptionControllerProvider(
+        widget.pokemonId,
+      );
+      ref.read(pokemonRiverpod.notifier).isFavorite(widget.pokemonId);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final pokemonRiverpod = pokemonDescriptionControllerProvider(
@@ -125,7 +137,10 @@ class _PokemonDescriptionPageState
                           const SizedBox(height: AppSpacing.xl),
                           GenderSection(detail: state.detail),
                           const SizedBox(height: AppSpacing.xl),
-                          Text(context.l10n.weaknesses, style: AppTypography.h4),
+                          Text(
+                            context.l10n.weaknesses,
+                            style: AppTypography.h4,
+                          ),
                           const SizedBox(height: AppSpacing.md),
                           Wrap(
                             spacing: AppSpacing.sm,

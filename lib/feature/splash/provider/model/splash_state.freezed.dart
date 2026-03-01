@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SplashState {
 
- Animation<double>? get logoFade; Animation<double>? get logoScale; double get logoWidth; double get logoHeight; AnimationController? get bgController; AnimationController? get logoController;
+ double get logoWidth; double get logoHeight;
 /// Create a copy of SplashState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $SplashStateCopyWith<SplashState> get copyWith => _$SplashStateCopyWithImpl<Spla
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashState&&(identical(other.logoFade, logoFade) || other.logoFade == logoFade)&&(identical(other.logoScale, logoScale) || other.logoScale == logoScale)&&(identical(other.logoWidth, logoWidth) || other.logoWidth == logoWidth)&&(identical(other.logoHeight, logoHeight) || other.logoHeight == logoHeight)&&(identical(other.bgController, bgController) || other.bgController == bgController)&&(identical(other.logoController, logoController) || other.logoController == logoController));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashState&&(identical(other.logoWidth, logoWidth) || other.logoWidth == logoWidth)&&(identical(other.logoHeight, logoHeight) || other.logoHeight == logoHeight));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,logoFade,logoScale,logoWidth,logoHeight,bgController,logoController);
+int get hashCode => Object.hash(runtimeType,logoWidth,logoHeight);
 
 @override
 String toString() {
-  return 'SplashState(logoFade: $logoFade, logoScale: $logoScale, logoWidth: $logoWidth, logoHeight: $logoHeight, bgController: $bgController, logoController: $logoController)';
+  return 'SplashState(logoWidth: $logoWidth, logoHeight: $logoHeight)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $SplashStateCopyWith<$Res>  {
   factory $SplashStateCopyWith(SplashState value, $Res Function(SplashState) _then) = _$SplashStateCopyWithImpl;
 @useResult
 $Res call({
- Animation<double>? logoFade, Animation<double>? logoScale, double logoWidth, double logoHeight, AnimationController? bgController, AnimationController? logoController
+ double logoWidth, double logoHeight
 });
 
 
@@ -62,15 +62,11 @@ class _$SplashStateCopyWithImpl<$Res>
 
 /// Create a copy of SplashState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? logoFade = freezed,Object? logoScale = freezed,Object? logoWidth = null,Object? logoHeight = null,Object? bgController = freezed,Object? logoController = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? logoWidth = null,Object? logoHeight = null,}) {
   return _then(_self.copyWith(
-logoFade: freezed == logoFade ? _self.logoFade : logoFade // ignore: cast_nullable_to_non_nullable
-as Animation<double>?,logoScale: freezed == logoScale ? _self.logoScale : logoScale // ignore: cast_nullable_to_non_nullable
-as Animation<double>?,logoWidth: null == logoWidth ? _self.logoWidth : logoWidth // ignore: cast_nullable_to_non_nullable
+logoWidth: null == logoWidth ? _self.logoWidth : logoWidth // ignore: cast_nullable_to_non_nullable
 as double,logoHeight: null == logoHeight ? _self.logoHeight : logoHeight // ignore: cast_nullable_to_non_nullable
-as double,bgController: freezed == bgController ? _self.bgController : bgController // ignore: cast_nullable_to_non_nullable
-as AnimationController?,logoController: freezed == logoController ? _self.logoController : logoController // ignore: cast_nullable_to_non_nullable
-as AnimationController?,
+as double,
   ));
 }
 
@@ -152,10 +148,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Animation<double>? logoFade,  Animation<double>? logoScale,  double logoWidth,  double logoHeight,  AnimationController? bgController,  AnimationController? logoController)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double logoWidth,  double logoHeight)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case SplashStateData() when $default != null:
-return $default(_that.logoFade,_that.logoScale,_that.logoWidth,_that.logoHeight,_that.bgController,_that.logoController);case _:
+return $default(_that.logoWidth,_that.logoHeight);case _:
   return orElse();
 
 }
@@ -173,10 +169,10 @@ return $default(_that.logoFade,_that.logoScale,_that.logoWidth,_that.logoHeight,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Animation<double>? logoFade,  Animation<double>? logoScale,  double logoWidth,  double logoHeight,  AnimationController? bgController,  AnimationController? logoController)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double logoWidth,  double logoHeight)  $default,) {final _that = this;
 switch (_that) {
 case SplashStateData():
-return $default(_that.logoFade,_that.logoScale,_that.logoWidth,_that.logoHeight,_that.bgController,_that.logoController);}
+return $default(_that.logoWidth,_that.logoHeight);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -190,10 +186,10 @@ return $default(_that.logoFade,_that.logoScale,_that.logoWidth,_that.logoHeight,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Animation<double>? logoFade,  Animation<double>? logoScale,  double logoWidth,  double logoHeight,  AnimationController? bgController,  AnimationController? logoController)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double logoWidth,  double logoHeight)?  $default,) {final _that = this;
 switch (_that) {
 case SplashStateData() when $default != null:
-return $default(_that.logoFade,_that.logoScale,_that.logoWidth,_that.logoHeight,_that.bgController,_that.logoController);case _:
+return $default(_that.logoWidth,_that.logoHeight);case _:
   return null;
 
 }
@@ -205,15 +201,11 @@ return $default(_that.logoFade,_that.logoScale,_that.logoWidth,_that.logoHeight,
 
 
 class SplashStateData implements SplashState {
-  const SplashStateData({this.logoFade, this.logoScale, this.logoWidth = 300, this.logoHeight = 300, this.bgController, this.logoController});
+  const SplashStateData({this.logoWidth = 300, this.logoHeight = 300});
   
 
-@override final  Animation<double>? logoFade;
-@override final  Animation<double>? logoScale;
 @override@JsonKey() final  double logoWidth;
 @override@JsonKey() final  double logoHeight;
-@override final  AnimationController? bgController;
-@override final  AnimationController? logoController;
 
 /// Create a copy of SplashState
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +217,16 @@ $SplashStateDataCopyWith<SplashStateData> get copyWith => _$SplashStateDataCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashStateData&&(identical(other.logoFade, logoFade) || other.logoFade == logoFade)&&(identical(other.logoScale, logoScale) || other.logoScale == logoScale)&&(identical(other.logoWidth, logoWidth) || other.logoWidth == logoWidth)&&(identical(other.logoHeight, logoHeight) || other.logoHeight == logoHeight)&&(identical(other.bgController, bgController) || other.bgController == bgController)&&(identical(other.logoController, logoController) || other.logoController == logoController));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashStateData&&(identical(other.logoWidth, logoWidth) || other.logoWidth == logoWidth)&&(identical(other.logoHeight, logoHeight) || other.logoHeight == logoHeight));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,logoFade,logoScale,logoWidth,logoHeight,bgController,logoController);
+int get hashCode => Object.hash(runtimeType,logoWidth,logoHeight);
 
 @override
 String toString() {
-  return 'SplashState(logoFade: $logoFade, logoScale: $logoScale, logoWidth: $logoWidth, logoHeight: $logoHeight, bgController: $bgController, logoController: $logoController)';
+  return 'SplashState(logoWidth: $logoWidth, logoHeight: $logoHeight)';
 }
 
 
@@ -245,7 +237,7 @@ abstract mixin class $SplashStateDataCopyWith<$Res> implements $SplashStateCopyW
   factory $SplashStateDataCopyWith(SplashStateData value, $Res Function(SplashStateData) _then) = _$SplashStateDataCopyWithImpl;
 @override @useResult
 $Res call({
- Animation<double>? logoFade, Animation<double>? logoScale, double logoWidth, double logoHeight, AnimationController? bgController, AnimationController? logoController
+ double logoWidth, double logoHeight
 });
 
 
@@ -262,15 +254,11 @@ class _$SplashStateDataCopyWithImpl<$Res>
 
 /// Create a copy of SplashState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? logoFade = freezed,Object? logoScale = freezed,Object? logoWidth = null,Object? logoHeight = null,Object? bgController = freezed,Object? logoController = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? logoWidth = null,Object? logoHeight = null,}) {
   return _then(SplashStateData(
-logoFade: freezed == logoFade ? _self.logoFade : logoFade // ignore: cast_nullable_to_non_nullable
-as Animation<double>?,logoScale: freezed == logoScale ? _self.logoScale : logoScale // ignore: cast_nullable_to_non_nullable
-as Animation<double>?,logoWidth: null == logoWidth ? _self.logoWidth : logoWidth // ignore: cast_nullable_to_non_nullable
+logoWidth: null == logoWidth ? _self.logoWidth : logoWidth // ignore: cast_nullable_to_non_nullable
 as double,logoHeight: null == logoHeight ? _self.logoHeight : logoHeight // ignore: cast_nullable_to_non_nullable
-as double,bgController: freezed == bgController ? _self.bgController : bgController // ignore: cast_nullable_to_non_nullable
-as AnimationController?,logoController: freezed == logoController ? _self.logoController : logoController // ignore: cast_nullable_to_non_nullable
-as AnimationController?,
+as double,
   ));
 }
 

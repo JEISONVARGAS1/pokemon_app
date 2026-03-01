@@ -1,5 +1,6 @@
-import 'package:prokemn_app/feature/pokemon_description/data/model/pokemon_detail_model.dart';
+import 'package:prokemn_app/core/api/center_api.dart';
+import 'package:prokemn_app/core/model/pokemon_detail_model.dart';
 
-abstract class PokemonDescriptionApiInterface {
+abstract class PokemonDescriptionApiInterface extends CenterApi {
   Future<PokemonDetailModel?> fetchPokemonDetail(int pokemonId);
 }

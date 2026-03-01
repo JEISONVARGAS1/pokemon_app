@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/core/error/exceptions.dart';
 import 'package:prokemn_app/core/model/query_response_model.dart';
-import 'package:prokemn_app/feature/pokemon_description/data/model/pokemon_detail_model.dart';
+import 'package:prokemn_app/core/model/pokemon_detail_model.dart';
 import 'package:prokemn_app/feature/pokemon_description/data/pokemon_description_api.dart';
 import 'package:prokemn_app/feature/pokemon_description/data/pokemon_description_api_interface.dart';
 

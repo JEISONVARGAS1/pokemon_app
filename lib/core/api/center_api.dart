@@ -13,10 +13,12 @@ class CenterApi {
 
   Map<String, String> get _headers {
     if (token.isEmpty) {
-      return Server().headers;
+      return {
+        'Content-Type': 'application/json',
+      };
     } else {
       return {
-        ...Server().headers,
+        'Content-Type': 'application/json',
         HttpHeaders.authorizationHeader: 'Bearer $token',
       };
     }
@@ -27,7 +29,7 @@ class CenterApi {
     bool isCustomUrl = false,
   }) async {
     try {
-      Uri url = Uri.parse(Server().productApi(urlSpecific));
+      Uri url = Uri.parse(pokemonApi(urlSpecific));
 
       if (isCustomUrl) url = Uri.parse(urlSpecific);
 
@@ -93,7 +95,7 @@ class CenterApi {
   }) async {
     try {
       final response = await http.patch(
-        Uri.parse(Server().productApi(urlSpecific)),
+        Uri.parse(pokemonApi(urlSpecific)),
         headers: _headers,
         body: json.encode(body),
       );
@@ -123,7 +125,7 @@ class CenterApi {
   Future<QueryResponseModel> delete({required String urlSpecific}) async {
     try {
       final response = await http.delete(
-        Uri.parse(Server().productApi(urlSpecific)),
+        Uri.parse(pokemonApi(urlSpecific)),
         headers: _headers,
       );
 

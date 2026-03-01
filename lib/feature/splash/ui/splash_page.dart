@@ -14,16 +14,14 @@ class SplashPage extends ConsumerStatefulWidget {
   ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends ConsumerState<SplashPage>
-    with TickerProviderStateMixin {
+class _SplashPageState extends ConsumerState<SplashPage> {
   @override
   void initState() {
     super.initState();
 
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      ref.read(splashControllerProvider.notifier).initAnimations(this);
-      ref.read(homeControllerProvider.notifier).initPage();
-      Future.delayed(const Duration(milliseconds: 2500), _navigateToOnboarding);
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await ref.read(homeControllerProvider.notifier).initPage();
+      _navigateToOnboarding();
     });
   }
 
@@ -37,14 +35,11 @@ class _SplashPageState extends ConsumerState<SplashPage>
     final state = ref.watch(splashControllerProvider).value!;
     final provider = ref.read(splashControllerProvider.notifier);
 
-    if (state.bgController == null) return const SizedBox.shrink();
-
     return Scaffold(
       body: Stack(
         children: [
           Positioned.fill(
             child: _AnimatedStarsBackground(
-              animation: state.bgController!,
               stars: provider.generateStars(),
             ),
           ),
@@ -69,21 +64,41 @@ class _SplashPageState extends ConsumerState<SplashPage>
   }
 }
 
-class _AnimatedStarsBackground extends AnimatedWidget {
+class _AnimatedStarsBackground extends StatefulWidget {
   final List<StarData> stars;
 
-  const _AnimatedStarsBackground({
-    required this.stars,
-    required Animation<double> animation,
-  }) : super(listenable: animation);
+  const _AnimatedStarsBackground({required this.stars});
+
+  @override
+  State<_AnimatedStarsBackground> createState() =>
+      _AnimatedStarsBackgroundState();
+}
+
+class _AnimatedStarsBackgroundState extends State<_AnimatedStarsBackground>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final animation = listenable as Animation<double>;
     return Container(
-      color: Color(0xFF0B132B),
+      color: const Color(0xFF0B132B),
       child: CustomPaint(
-        painter: StarsPainter(animation: animation, stars: stars),
+        painter: StarsPainter(animation: _controller, stars: widget.stars),
         size: Size.infinite,
       ),
     );

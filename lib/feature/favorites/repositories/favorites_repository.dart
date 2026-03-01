@@ -3,7 +3,7 @@ import 'package:prokemn_app/core/error/exceptions.dart';
 import 'package:prokemn_app/core/model/query_response_model.dart';
 import 'package:prokemn_app/feature/home/data/home_api.dart';
 import 'package:prokemn_app/feature/home/data/home_api_interface.dart';
-import 'package:prokemn_app/feature/home/data/model/pokemon_model.dart';
+import 'package:prokemn_app/core/model/pokemon_model.dart';
 
 abstract class HomeRepository {
   Future<QueryResponseModel<List<PokemonModel>>> fetchPokemonList({

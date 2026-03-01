@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:prokemn_app/core/data/provider/global_controller.dart';
-import 'package:prokemn_app/feature/home/data/model/pokemon_model.dart';
+import 'package:prokemn_app/core/model/pokemon_model.dart';
 import 'package:prokemn_app/feature/home/provider/model/home_state.dart';
 import 'package:prokemn_app/feature/home/repositories/home_repository.dart';
 

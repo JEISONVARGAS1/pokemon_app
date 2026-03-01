@@ -22,7 +22,9 @@ class PokemonDescriptionController extends _$PokemonDescriptionController {
 
   void _listenFavorites() {
     ref.listen(globalControllerProvider, (previous, next) {
-      final isFavorite = next.value!.pokemonListFavorites.any((p) => p.id == pokemonId);
+      final isFavorite = next.value!.pokemonListFavorites.any(
+        (p) => p.id == pokemonId,
+      );
       _setState(state.value!.copyWith(isFavorite: isFavorite));
     });
   }
@@ -83,7 +85,12 @@ class PokemonDescriptionController extends _$PokemonDescriptionController {
     );
   }
 
-  bool isFavorite(int pokemonId) => globalController.isFavorite(pokemonId);
+  void isFavorite(int pokemonId) {
+    Future.delayed(const Duration(seconds: 2), () {
+      final isFavorite = globalController.isFavorite(pokemonId);
+      _setState(state.value!.copyWith(isFavorite: isFavorite));
+    });
+  }
 
   void _onScroll() {
     final stateValue = state.value;

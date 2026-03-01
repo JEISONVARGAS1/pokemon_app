@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:prokemn_app/feature/pokemon_description/data/model/pokemon_detail_model.dart';
+import 'package:prokemn_app/core/model/pokemon_detail_model.dart';
 
 part 'pokemon_description_state.freezed.dart';
 

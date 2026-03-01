@@ -1,37 +1,33 @@
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
-import 'package:prokemn_app/feature/home/data/model/pokemon_model.dart';
-import 'package:prokemn_app/feature/pokemon_description/data/model/pokemon_detail_model.dart';
-import 'package:prokemn_app/feature/pokemon_description/data/pokemon_description_api_interface.dart';
+import 'package:prokemn_app/core/model/pokemon_detail_model.dart';
+import 'package:prokemn_app/core/model/pokemon_model.dart';
 import 'package:prokemn_app/feature/pokemon_description/data/weakness_map.dart';
+import 'package:prokemn_app/feature/pokemon_description/data/pokemon_description_api_interface.dart';
 
 class _PokemonDescriptionApi extends PokemonDescriptionApiInterface {
-  static const _baseUrl = 'https://pokeapi.co/api/v2';
 
   @override
   Future<PokemonDetailModel?> fetchPokemonDetail(int pokemonId) async {
-    final pokemonResponse = await http.get(
-      Uri.parse('$_baseUrl/pokemon/$pokemonId'),
+    final pokemonResponse = await get(
+      urlSpecific: 'pokemon/$pokemonId',
     );
-    if (pokemonResponse.statusCode != 200) return null;
+    if (!pokemonResponse.isSuccessful) return null;
 
-    final speciesResponse = await http.get(
-      Uri.parse('$_baseUrl/pokemon-species/$pokemonId'),
+    final speciesResponse = await get(
+      urlSpecific: 'pokemon-species/$pokemonId',
     );
-    if (speciesResponse.statusCode != 200) return null;
+    if (!speciesResponse.isSuccessful) return null;
 
-    final pokemonData =
-        jsonDecode(pokemonResponse.body) as Map<String, dynamic>;
-    final speciesData =
-        jsonDecode(speciesResponse.body) as Map<String, dynamic>;
+    final pokemonData = pokemonResponse.data;
+    final speciesData = speciesResponse.data;
 
+    final ability = _extractAbility(pokemonData);
+    final category = _extractCategory(speciesData);
     final pokemon = PokemonModel.fromJson(pokemonData);
     final description = _extractDescription(speciesData);
-    final category = _extractCategory(speciesData);
     final (malePercent, femalePercent) = _extractGender(speciesData);
-    final ability = _extractAbility(pokemonData);
     final weaknesses = _getWeaknesses(pokemon.types.map((t) => t.key).toList());
 
     return PokemonDetailModel(
