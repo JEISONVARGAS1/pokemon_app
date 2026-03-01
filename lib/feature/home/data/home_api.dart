@@ -26,15 +26,20 @@ class _HomeApi extends HomeApiInterface {
     final listData = jsonDecode(listResponse.body) as Map<String, dynamic>;
     final results = listData['results'] as List<dynamic>? ?? [];
 
-    final pokemonList = <PokemonModel>[];
-
+    final urls = <String>[];
     for (final item in results) {
       final url = item['url'] as String?;
-      if (url == null) continue;
+      if (url != null) urls.add(url);
+    }
 
-      final detailResponse = await http.get(Uri.parse(url));
+    // Peticiones en paralelo para cargar más rápido
+    final responses = await Future.wait(
+      urls.map((url) => http.get(Uri.parse(url))),
+    );
+
+    final pokemonList = <PokemonModel>[];
+    for (final detailResponse in responses) {
       if (detailResponse.statusCode != 200) continue;
-
       final detailData = jsonDecode(detailResponse.body) as Map<String, dynamic>;
       pokemonList.add(PokemonModel.fromJson(detailData));
     }

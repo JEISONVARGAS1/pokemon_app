@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/core/model/start_data.dart';
+import 'package:prokemn_app/feature/home/provider/home_controller.dart';
 import 'package:prokemn_app/feature/splash/ui/widget/star_painter.dart';
 import 'package:prokemn_app/feature/splash/provider/splash_controller.dart';
 
@@ -21,6 +22,7 @@ class _SplashPageState extends ConsumerState<SplashPage>
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       ref.read(splashControllerProvider.notifier).initAnimations(this);
+      ref.read(homeControllerProvider.notifier).initPage();
       Future.delayed(const Duration(milliseconds: 2500), _navigateToOnboarding);
     });
   }
