@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/core/widget/loading_page.dart';
 import 'package:prokemn_app/core/widget/pokemon_list.dart';
 import 'package:prokemn_app/core/extension/context_extension.dart';
+import 'package:prokemn_app/core/widget/custom_slidin_up_panel.dart';
+import 'package:prokemn_app/feature/home/ui/widgets/panel_filter.dart';
 import 'package:prokemn_app/feature/home/provider/home_controller.dart';
 import 'package:prokemn_app/feature/home/ui/widgets/pokedex_search_bar.dart';
 
@@ -41,7 +43,10 @@ class _HomePageState extends ConsumerState<HomePage> {
       );
     }
 
-    final pokemonList = state.searchController.text.isNotEmpty
+    bool isFiltering =
+        state.searchController.text.isNotEmpty || state.isFiltering;
+
+    final pokemonList = isFiltering
         ? state.pokemonListFiltered
         : state.pokemonList;
 
@@ -52,21 +57,43 @@ class _HomePageState extends ConsumerState<HomePage> {
         surfaceTintColor: Colors.white,
         backgroundColor: Colors.grey.shade50,
       ),
-      body: LoadingPage(
-        isLoading: state.isLoading,
-        child: Column(
-          children: [
-            PokedexSearchBar(controller: state.searchController),
-            Expanded(
-              child: PokemonList(
-                favorites: state.favorites,
-                onFavoriteTap: provider.toggleFavorite,
-                scrollController: state.scrollController,
-                onPokemonTap: (p) => context.push('/pokemon/${p.id}'),
-                pokemon: provider.filterPokemon(pokemonList, state.searchQuery),
+      body: CustomSlidinUpPanel(
+        controller: state.panelController,
+        panel: PanelFilter(
+          selectedTypes: state.selectedTypes,
+          onApply: (types) {
+            provider.applyTypeFilters(types);
+            provider.closePanel();
+          },
+          onClose: provider.closePanel,
+          onCancel: provider.closePanel,
+        ),
+        body: LoadingPage(
+          isLoading: state.isLoading,
+          child: Column(
+            children: [
+              PokedexSearchBar(
+                isFiltering: isFiltering,
+                controller: state.searchController,
+                onTapSearch: isFiltering
+                    ? provider.clearFilters
+                    : provider.openPanel,
               ),
-            ),
-          ],
+              Expanded(
+                child: PokemonList(
+                  favorites: state.favorites,
+                  onFavoriteTap: provider.toggleFavorite,
+                  scrollController: state.scrollController,
+                  onPokemonTap: (p) => context.push('/pokemon/${p.id}'),
+                  pokemon: provider.filterPokemon(
+                    pokemonList,
+                    state.searchQuery,
+                    typeFilters: state.selectedTypes,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

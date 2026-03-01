@@ -95,4 +95,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get viewProfileOnLinkedin => 'VIEW PROFILE ON LINKEDIN';
+
+  @override
+  String get filterByPreferences => 'Filter by your preferences';
+
+  @override
+  String get filterType => 'Type';
+
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String get cancel => 'Cancel';
 }

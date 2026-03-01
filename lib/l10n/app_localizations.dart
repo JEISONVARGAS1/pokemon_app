@@ -265,6 +265,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'VIEW PROFILE ON LINKEDIN'**
   String get viewProfileOnLinkedin;
+
+  /// Filter panel title
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by your preferences'**
+  String get filterByPreferences;
+
+  /// Filter section for Pokémon type
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get filterType;
+
+  /// Apply filter button
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// Cancel button
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate

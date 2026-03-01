@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 
 class PokedexSearchBar extends StatelessWidget {
+  final bool isFiltering;
+  final VoidCallback? onTapSearch;
   final TextEditingController controller;
 
+  
   const PokedexSearchBar({
     super.key,
+    this.onTapSearch,
     required this.controller,
+    required this.isFiltering,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: .symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
           Expanded(
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: .circular(16),
+                border: .all(color: Colors.grey.shade300),
               ),
               child: TextField(
                 controller: controller,
@@ -35,10 +40,7 @@ class PokedexSearchBar extends StatelessWidget {
                     size: 22,
                   ),
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
+                  contentPadding: .symmetric(horizontal: 16, vertical: 14),
                 ),
               ),
             ),
@@ -47,17 +49,17 @@ class PokedexSearchBar extends StatelessWidget {
           Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () => controller.clear(),
-              borderRadius: BorderRadius.circular(24),
+              onTap: onTapSearch,
+              borderRadius: .circular(24),
               child: Container(
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
+                  shape: .circle,
                   border: Border.all(color: Colors.grey.shade400, width: 1.5),
                 ),
                 child: Icon(
-                  Icons.search,
+                  isFiltering ? Icons.close : Icons.search,
                   color: Colors.grey.shade700,
                   size: 24,
                 ),

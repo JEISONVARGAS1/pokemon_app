@@ -111,5 +111,21 @@
   "viewProfileOnLinkedin": "VIEW PROFILE ON LINKEDIN",
   "@viewProfileOnLinkedin": {
     "description": "LinkedIn button text"
+  },
+  "filterByPreferences": "Filter by your preferences",
+  "@filterByPreferences": {
+    "description": "Filter panel title"
+  },
+  "filterType": "Type",
+  "@filterType": {
+    "description": "Filter section for Pokémon type"
+  },
+  "apply": "Apply",
+  "@apply": {
+    "description": "Apply filter button"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button"
   }
 }

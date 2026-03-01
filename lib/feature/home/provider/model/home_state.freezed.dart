@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState {
 
- int get page; bool get isLoading; String get searchQuery; Set<int> get favorites; DebouncerUtil get debouncer; String get errorMessage; bool get hasReachedEnd; bool get isLoadingNextPage; ScrollController get scrollController; List<PokemonModel> get pokemonList; TextEditingController get searchController; List<PokemonModel> get pokemonListFiltered;
+ int get page; bool get isLoading; String get searchQuery; Set<int> get favorites; bool get isFiltering; DebouncerUtil get debouncer; String get errorMessage; bool get hasReachedEnd; bool get isLoadingNextPage; Set<String> get selectedTypes; PanelController get panelController; ScrollController get scrollController; List<PokemonModel> get pokemonList; TextEditingController get searchController; List<PokemonModel> get pokemonListFiltered;
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.page, page) || other.page == page)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&const DeepCollectionEquality().equals(other.favorites, favorites)&&(identical(other.debouncer, debouncer) || other.debouncer == debouncer)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.hasReachedEnd, hasReachedEnd) || other.hasReachedEnd == hasReachedEnd)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage)&&(identical(other.scrollController, scrollController) || other.scrollController == scrollController)&&const DeepCollectionEquality().equals(other.pokemonList, pokemonList)&&(identical(other.searchController, searchController) || other.searchController == searchController)&&const DeepCollectionEquality().equals(other.pokemonListFiltered, pokemonListFiltered));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.page, page) || other.page == page)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&const DeepCollectionEquality().equals(other.favorites, favorites)&&(identical(other.isFiltering, isFiltering) || other.isFiltering == isFiltering)&&(identical(other.debouncer, debouncer) || other.debouncer == debouncer)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.hasReachedEnd, hasReachedEnd) || other.hasReachedEnd == hasReachedEnd)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage)&&const DeepCollectionEquality().equals(other.selectedTypes, selectedTypes)&&(identical(other.panelController, panelController) || other.panelController == panelController)&&(identical(other.scrollController, scrollController) || other.scrollController == scrollController)&&const DeepCollectionEquality().equals(other.pokemonList, pokemonList)&&(identical(other.searchController, searchController) || other.searchController == searchController)&&const DeepCollectionEquality().equals(other.pokemonListFiltered, pokemonListFiltered));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,page,isLoading,searchQuery,const DeepCollectionEquality().hash(favorites),debouncer,errorMessage,hasReachedEnd,isLoadingNextPage,scrollController,const DeepCollectionEquality().hash(pokemonList),searchController,const DeepCollectionEquality().hash(pokemonListFiltered));
+int get hashCode => Object.hash(runtimeType,page,isLoading,searchQuery,const DeepCollectionEquality().hash(favorites),isFiltering,debouncer,errorMessage,hasReachedEnd,isLoadingNextPage,const DeepCollectionEquality().hash(selectedTypes),panelController,scrollController,const DeepCollectionEquality().hash(pokemonList),searchController,const DeepCollectionEquality().hash(pokemonListFiltered));
 
 @override
 String toString() {
-  return 'HomeState(page: $page, isLoading: $isLoading, searchQuery: $searchQuery, favorites: $favorites, debouncer: $debouncer, errorMessage: $errorMessage, hasReachedEnd: $hasReachedEnd, isLoadingNextPage: $isLoadingNextPage, scrollController: $scrollController, pokemonList: $pokemonList, searchController: $searchController, pokemonListFiltered: $pokemonListFiltered)';
+  return 'HomeState(page: $page, isLoading: $isLoading, searchQuery: $searchQuery, favorites: $favorites, isFiltering: $isFiltering, debouncer: $debouncer, errorMessage: $errorMessage, hasReachedEnd: $hasReachedEnd, isLoadingNextPage: $isLoadingNextPage, selectedTypes: $selectedTypes, panelController: $panelController, scrollController: $scrollController, pokemonList: $pokemonList, searchController: $searchController, pokemonListFiltered: $pokemonListFiltered)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $HomeStateCopyWith<$Res>  {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
 @useResult
 $Res call({
- int page, bool isLoading, String searchQuery, Set<int> favorites, DebouncerUtil debouncer, String errorMessage, bool hasReachedEnd, bool isLoadingNextPage, ScrollController scrollController, List<PokemonModel> pokemonList, TextEditingController searchController, List<PokemonModel> pokemonListFiltered
+ int page, bool isLoading, String searchQuery, Set<int> favorites, bool isFiltering, DebouncerUtil debouncer, String errorMessage, bool hasReachedEnd, bool isLoadingNextPage, Set<String> selectedTypes, PanelController panelController, ScrollController scrollController, List<PokemonModel> pokemonList, TextEditingController searchController, List<PokemonModel> pokemonListFiltered
 });
 
 
@@ -62,17 +62,20 @@ class _$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? page = null,Object? isLoading = null,Object? searchQuery = null,Object? favorites = null,Object? debouncer = null,Object? errorMessage = null,Object? hasReachedEnd = null,Object? isLoadingNextPage = null,Object? scrollController = null,Object? pokemonList = null,Object? searchController = null,Object? pokemonListFiltered = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? page = null,Object? isLoading = null,Object? searchQuery = null,Object? favorites = null,Object? isFiltering = null,Object? debouncer = null,Object? errorMessage = null,Object? hasReachedEnd = null,Object? isLoadingNextPage = null,Object? selectedTypes = null,Object? panelController = null,Object? scrollController = null,Object? pokemonList = null,Object? searchController = null,Object? pokemonListFiltered = null,}) {
   return _then(_self.copyWith(
 page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
 as int,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
 as String,favorites: null == favorites ? _self.favorites : favorites // ignore: cast_nullable_to_non_nullable
-as Set<int>,debouncer: null == debouncer ? _self.debouncer : debouncer // ignore: cast_nullable_to_non_nullable
+as Set<int>,isFiltering: null == isFiltering ? _self.isFiltering : isFiltering // ignore: cast_nullable_to_non_nullable
+as bool,debouncer: null == debouncer ? _self.debouncer : debouncer // ignore: cast_nullable_to_non_nullable
 as DebouncerUtil,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,hasReachedEnd: null == hasReachedEnd ? _self.hasReachedEnd : hasReachedEnd // ignore: cast_nullable_to_non_nullable
 as bool,isLoadingNextPage: null == isLoadingNextPage ? _self.isLoadingNextPage : isLoadingNextPage // ignore: cast_nullable_to_non_nullable
-as bool,scrollController: null == scrollController ? _self.scrollController : scrollController // ignore: cast_nullable_to_non_nullable
+as bool,selectedTypes: null == selectedTypes ? _self.selectedTypes : selectedTypes // ignore: cast_nullable_to_non_nullable
+as Set<String>,panelController: null == panelController ? _self.panelController : panelController // ignore: cast_nullable_to_non_nullable
+as PanelController,scrollController: null == scrollController ? _self.scrollController : scrollController // ignore: cast_nullable_to_non_nullable
 as ScrollController,pokemonList: null == pokemonList ? _self.pokemonList : pokemonList // ignore: cast_nullable_to_non_nullable
 as List<PokemonModel>,searchController: null == searchController ? _self.searchController : searchController // ignore: cast_nullable_to_non_nullable
 as TextEditingController,pokemonListFiltered: null == pokemonListFiltered ? _self.pokemonListFiltered : pokemonListFiltered // ignore: cast_nullable_to_non_nullable
@@ -158,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int page,  bool isLoading,  String searchQuery,  Set<int> favorites,  DebouncerUtil debouncer,  String errorMessage,  bool hasReachedEnd,  bool isLoadingNextPage,  ScrollController scrollController,  List<PokemonModel> pokemonList,  TextEditingController searchController,  List<PokemonModel> pokemonListFiltered)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int page,  bool isLoading,  String searchQuery,  Set<int> favorites,  bool isFiltering,  DebouncerUtil debouncer,  String errorMessage,  bool hasReachedEnd,  bool isLoadingNextPage,  Set<String> selectedTypes,  PanelController panelController,  ScrollController scrollController,  List<PokemonModel> pokemonList,  TextEditingController searchController,  List<PokemonModel> pokemonListFiltered)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case HomeStateData() when $default != null:
-return $default(_that.page,_that.isLoading,_that.searchQuery,_that.favorites,_that.debouncer,_that.errorMessage,_that.hasReachedEnd,_that.isLoadingNextPage,_that.scrollController,_that.pokemonList,_that.searchController,_that.pokemonListFiltered);case _:
+return $default(_that.page,_that.isLoading,_that.searchQuery,_that.favorites,_that.isFiltering,_that.debouncer,_that.errorMessage,_that.hasReachedEnd,_that.isLoadingNextPage,_that.selectedTypes,_that.panelController,_that.scrollController,_that.pokemonList,_that.searchController,_that.pokemonListFiltered);case _:
   return orElse();
 
 }
@@ -179,10 +182,10 @@ return $default(_that.page,_that.isLoading,_that.searchQuery,_that.favorites,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int page,  bool isLoading,  String searchQuery,  Set<int> favorites,  DebouncerUtil debouncer,  String errorMessage,  bool hasReachedEnd,  bool isLoadingNextPage,  ScrollController scrollController,  List<PokemonModel> pokemonList,  TextEditingController searchController,  List<PokemonModel> pokemonListFiltered)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int page,  bool isLoading,  String searchQuery,  Set<int> favorites,  bool isFiltering,  DebouncerUtil debouncer,  String errorMessage,  bool hasReachedEnd,  bool isLoadingNextPage,  Set<String> selectedTypes,  PanelController panelController,  ScrollController scrollController,  List<PokemonModel> pokemonList,  TextEditingController searchController,  List<PokemonModel> pokemonListFiltered)  $default,) {final _that = this;
 switch (_that) {
 case HomeStateData():
-return $default(_that.page,_that.isLoading,_that.searchQuery,_that.favorites,_that.debouncer,_that.errorMessage,_that.hasReachedEnd,_that.isLoadingNextPage,_that.scrollController,_that.pokemonList,_that.searchController,_that.pokemonListFiltered);}
+return $default(_that.page,_that.isLoading,_that.searchQuery,_that.favorites,_that.isFiltering,_that.debouncer,_that.errorMessage,_that.hasReachedEnd,_that.isLoadingNextPage,_that.selectedTypes,_that.panelController,_that.scrollController,_that.pokemonList,_that.searchController,_that.pokemonListFiltered);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -196,10 +199,10 @@ return $default(_that.page,_that.isLoading,_that.searchQuery,_that.favorites,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int page,  bool isLoading,  String searchQuery,  Set<int> favorites,  DebouncerUtil debouncer,  String errorMessage,  bool hasReachedEnd,  bool isLoadingNextPage,  ScrollController scrollController,  List<PokemonModel> pokemonList,  TextEditingController searchController,  List<PokemonModel> pokemonListFiltered)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int page,  bool isLoading,  String searchQuery,  Set<int> favorites,  bool isFiltering,  DebouncerUtil debouncer,  String errorMessage,  bool hasReachedEnd,  bool isLoadingNextPage,  Set<String> selectedTypes,  PanelController panelController,  ScrollController scrollController,  List<PokemonModel> pokemonList,  TextEditingController searchController,  List<PokemonModel> pokemonListFiltered)?  $default,) {final _that = this;
 switch (_that) {
 case HomeStateData() when $default != null:
-return $default(_that.page,_that.isLoading,_that.searchQuery,_that.favorites,_that.debouncer,_that.errorMessage,_that.hasReachedEnd,_that.isLoadingNextPage,_that.scrollController,_that.pokemonList,_that.searchController,_that.pokemonListFiltered);case _:
+return $default(_that.page,_that.isLoading,_that.searchQuery,_that.favorites,_that.isFiltering,_that.debouncer,_that.errorMessage,_that.hasReachedEnd,_that.isLoadingNextPage,_that.selectedTypes,_that.panelController,_that.scrollController,_that.pokemonList,_that.searchController,_that.pokemonListFiltered);case _:
   return null;
 
 }
@@ -211,7 +214,7 @@ return $default(_that.page,_that.isLoading,_that.searchQuery,_that.favorites,_th
 
 
 class HomeStateData implements HomeState {
-  const HomeStateData({this.page = 0, this.isLoading = false, this.searchQuery = '', final  Set<int> favorites = const {}, required this.debouncer, this.errorMessage = '', this.hasReachedEnd = false, this.isLoadingNextPage = false, required this.scrollController, final  List<PokemonModel> pokemonList = const [], required this.searchController, final  List<PokemonModel> pokemonListFiltered = const []}): _favorites = favorites,_pokemonList = pokemonList,_pokemonListFiltered = pokemonListFiltered;
+  const HomeStateData({this.page = 0, this.isLoading = false, this.searchQuery = '', final  Set<int> favorites = const {}, this.isFiltering = false, required this.debouncer, this.errorMessage = '', this.hasReachedEnd = false, this.isLoadingNextPage = false, final  Set<String> selectedTypes = const {}, required this.panelController, required this.scrollController, final  List<PokemonModel> pokemonList = const [], required this.searchController, final  List<PokemonModel> pokemonListFiltered = const []}): _favorites = favorites,_selectedTypes = selectedTypes,_pokemonList = pokemonList,_pokemonListFiltered = pokemonListFiltered;
   
 
 @override@JsonKey() final  int page;
@@ -224,10 +227,19 @@ class HomeStateData implements HomeState {
   return EqualUnmodifiableSetView(_favorites);
 }
 
+@override@JsonKey() final  bool isFiltering;
 @override final  DebouncerUtil debouncer;
 @override@JsonKey() final  String errorMessage;
 @override@JsonKey() final  bool hasReachedEnd;
 @override@JsonKey() final  bool isLoadingNextPage;
+ final  Set<String> _selectedTypes;
+@override@JsonKey() Set<String> get selectedTypes {
+  if (_selectedTypes is EqualUnmodifiableSetView) return _selectedTypes;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableSetView(_selectedTypes);
+}
+
+@override final  PanelController panelController;
 @override final  ScrollController scrollController;
  final  List<PokemonModel> _pokemonList;
 @override@JsonKey() List<PokemonModel> get pokemonList {
@@ -255,16 +267,16 @@ $HomeStateDataCopyWith<HomeStateData> get copyWith => _$HomeStateDataCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeStateData&&(identical(other.page, page) || other.page == page)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&const DeepCollectionEquality().equals(other._favorites, _favorites)&&(identical(other.debouncer, debouncer) || other.debouncer == debouncer)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.hasReachedEnd, hasReachedEnd) || other.hasReachedEnd == hasReachedEnd)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage)&&(identical(other.scrollController, scrollController) || other.scrollController == scrollController)&&const DeepCollectionEquality().equals(other._pokemonList, _pokemonList)&&(identical(other.searchController, searchController) || other.searchController == searchController)&&const DeepCollectionEquality().equals(other._pokemonListFiltered, _pokemonListFiltered));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeStateData&&(identical(other.page, page) || other.page == page)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&const DeepCollectionEquality().equals(other._favorites, _favorites)&&(identical(other.isFiltering, isFiltering) || other.isFiltering == isFiltering)&&(identical(other.debouncer, debouncer) || other.debouncer == debouncer)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&(identical(other.hasReachedEnd, hasReachedEnd) || other.hasReachedEnd == hasReachedEnd)&&(identical(other.isLoadingNextPage, isLoadingNextPage) || other.isLoadingNextPage == isLoadingNextPage)&&const DeepCollectionEquality().equals(other._selectedTypes, _selectedTypes)&&(identical(other.panelController, panelController) || other.panelController == panelController)&&(identical(other.scrollController, scrollController) || other.scrollController == scrollController)&&const DeepCollectionEquality().equals(other._pokemonList, _pokemonList)&&(identical(other.searchController, searchController) || other.searchController == searchController)&&const DeepCollectionEquality().equals(other._pokemonListFiltered, _pokemonListFiltered));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,page,isLoading,searchQuery,const DeepCollectionEquality().hash(_favorites),debouncer,errorMessage,hasReachedEnd,isLoadingNextPage,scrollController,const DeepCollectionEquality().hash(_pokemonList),searchController,const DeepCollectionEquality().hash(_pokemonListFiltered));
+int get hashCode => Object.hash(runtimeType,page,isLoading,searchQuery,const DeepCollectionEquality().hash(_favorites),isFiltering,debouncer,errorMessage,hasReachedEnd,isLoadingNextPage,const DeepCollectionEquality().hash(_selectedTypes),panelController,scrollController,const DeepCollectionEquality().hash(_pokemonList),searchController,const DeepCollectionEquality().hash(_pokemonListFiltered));
 
 @override
 String toString() {
-  return 'HomeState(page: $page, isLoading: $isLoading, searchQuery: $searchQuery, favorites: $favorites, debouncer: $debouncer, errorMessage: $errorMessage, hasReachedEnd: $hasReachedEnd, isLoadingNextPage: $isLoadingNextPage, scrollController: $scrollController, pokemonList: $pokemonList, searchController: $searchController, pokemonListFiltered: $pokemonListFiltered)';
+  return 'HomeState(page: $page, isLoading: $isLoading, searchQuery: $searchQuery, favorites: $favorites, isFiltering: $isFiltering, debouncer: $debouncer, errorMessage: $errorMessage, hasReachedEnd: $hasReachedEnd, isLoadingNextPage: $isLoadingNextPage, selectedTypes: $selectedTypes, panelController: $panelController, scrollController: $scrollController, pokemonList: $pokemonList, searchController: $searchController, pokemonListFiltered: $pokemonListFiltered)';
 }
 
 
@@ -275,7 +287,7 @@ abstract mixin class $HomeStateDataCopyWith<$Res> implements $HomeStateCopyWith<
   factory $HomeStateDataCopyWith(HomeStateData value, $Res Function(HomeStateData) _then) = _$HomeStateDataCopyWithImpl;
 @override @useResult
 $Res call({
- int page, bool isLoading, String searchQuery, Set<int> favorites, DebouncerUtil debouncer, String errorMessage, bool hasReachedEnd, bool isLoadingNextPage, ScrollController scrollController, List<PokemonModel> pokemonList, TextEditingController searchController, List<PokemonModel> pokemonListFiltered
+ int page, bool isLoading, String searchQuery, Set<int> favorites, bool isFiltering, DebouncerUtil debouncer, String errorMessage, bool hasReachedEnd, bool isLoadingNextPage, Set<String> selectedTypes, PanelController panelController, ScrollController scrollController, List<PokemonModel> pokemonList, TextEditingController searchController, List<PokemonModel> pokemonListFiltered
 });
 
 
@@ -292,17 +304,20 @@ class _$HomeStateDataCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? page = null,Object? isLoading = null,Object? searchQuery = null,Object? favorites = null,Object? debouncer = null,Object? errorMessage = null,Object? hasReachedEnd = null,Object? isLoadingNextPage = null,Object? scrollController = null,Object? pokemonList = null,Object? searchController = null,Object? pokemonListFiltered = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? page = null,Object? isLoading = null,Object? searchQuery = null,Object? favorites = null,Object? isFiltering = null,Object? debouncer = null,Object? errorMessage = null,Object? hasReachedEnd = null,Object? isLoadingNextPage = null,Object? selectedTypes = null,Object? panelController = null,Object? scrollController = null,Object? pokemonList = null,Object? searchController = null,Object? pokemonListFiltered = null,}) {
   return _then(HomeStateData(
 page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
 as int,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
 as String,favorites: null == favorites ? _self._favorites : favorites // ignore: cast_nullable_to_non_nullable
-as Set<int>,debouncer: null == debouncer ? _self.debouncer : debouncer // ignore: cast_nullable_to_non_nullable
+as Set<int>,isFiltering: null == isFiltering ? _self.isFiltering : isFiltering // ignore: cast_nullable_to_non_nullable
+as bool,debouncer: null == debouncer ? _self.debouncer : debouncer // ignore: cast_nullable_to_non_nullable
 as DebouncerUtil,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,hasReachedEnd: null == hasReachedEnd ? _self.hasReachedEnd : hasReachedEnd // ignore: cast_nullable_to_non_nullable
 as bool,isLoadingNextPage: null == isLoadingNextPage ? _self.isLoadingNextPage : isLoadingNextPage // ignore: cast_nullable_to_non_nullable
-as bool,scrollController: null == scrollController ? _self.scrollController : scrollController // ignore: cast_nullable_to_non_nullable
+as bool,selectedTypes: null == selectedTypes ? _self._selectedTypes : selectedTypes // ignore: cast_nullable_to_non_nullable
+as Set<String>,panelController: null == panelController ? _self.panelController : panelController // ignore: cast_nullable_to_non_nullable
+as PanelController,scrollController: null == scrollController ? _self.scrollController : scrollController // ignore: cast_nullable_to_non_nullable
 as ScrollController,pokemonList: null == pokemonList ? _self._pokemonList : pokemonList // ignore: cast_nullable_to_non_nullable
 as List<PokemonModel>,searchController: null == searchController ? _self.searchController : searchController // ignore: cast_nullable_to_non_nullable
 as TextEditingController,pokemonListFiltered: null == pokemonListFiltered ? _self._pokemonListFiltered : pokemonListFiltered // ignore: cast_nullable_to_non_nullable

@@ -129,7 +129,9 @@ class HomeController extends _$HomeController {
   }
 
   void toggleFavorite(int pokemonId) {
-    final list = state.value!.searchController.text.isNotEmpty
+    final list =
+        state.value!.searchController.text.isNotEmpty ||
+            state.value!.isFiltering
         ? state.value!.pokemonListFiltered
         : state.value!.pokemonList;
 
@@ -139,15 +141,67 @@ class HomeController extends _$HomeController {
     } else {
       current.add(pokemonId);
     }
-    final pokeList = current.map((pokemonId) => list[pokemonId - 1]).toList();
+
+    final globalFavorites =
+        ref.read(globalControllerProvider).value?.pokemonListFavorites ?? [];
+    final pokeList = <PokemonModel>[];
+    for (final id in current) {
+      final fromList = list.where((p) => p.id == id).firstOrNull;
+      if (fromList != null) {
+        pokeList.add(fromList);
+      } else {
+        final fromGlobal = globalFavorites.where((p) => p.id == id).firstOrNull;
+        if (fromGlobal != null) pokeList.add(fromGlobal);
+      }
+    }
+
     _setState(state.value!.copyWith(favorites: current));
     globalController.savePokemonListFavorites(pokeList);
   }
 
-  List<PokemonModel> filterPokemon(List<PokemonModel> list, String query) {
-    if (query.isEmpty) return list;
+  Future<void> applyTypeFilters(Set<String> types) async {
+    _setState(state.value!.copyWith(isFiltering: true));
+    final result = await repository.fetchPokemonByTypes(types: types.toList());
+    if (result.isSuccessful) {
+      _setState(state.value!.copyWith(pokemonListFiltered: result.data!));
+    } else {
+      _setState(
+        state.value!.copyWith(errorMessage: result.exceptionCode.message),
+      );
+    }
+  }
+
+  void clearFilters() {
+    state.value!.searchController.clear();
+    _setState(
+      state.value!.copyWith(isFiltering: false, pokemonListFiltered: []),
+    );
+  }
+
+  void openPanel() {
+    state.value?.panelController.open();
+  }
+
+  void closePanel() {
+    state.value?.panelController.close();
+  }
+
+  List<PokemonModel> filterPokemon(
+    List<PokemonModel> list,
+    String query, {
+    Set<String>? typeFilters,
+  }) {
+    var result = list;
+
+    if (typeFilters != null && typeFilters.isNotEmpty) {
+      result = result.where((pokemon) {
+        return pokemon.types.any((t) => typeFilters.contains(t.key));
+      }).toList();
+    }
+
+    if (query.isEmpty) return result;
     final lower = query.toLowerCase();
-    return list.where((pokemon) {
+    return result.where((pokemon) {
       final name = pokemon.name.toLowerCase();
       final formattedName = pokemon.formattedName.toLowerCase();
       final pokedexNumber = pokemon.pokedexNumber.toLowerCase();

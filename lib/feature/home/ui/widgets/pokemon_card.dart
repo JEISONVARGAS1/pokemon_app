@@ -77,7 +77,9 @@ class _PokemonCardState extends State<PokemonCard>
 
   @override
   Widget build(BuildContext context) {
-    final cardColor = getCardBackgroundColor(widget.pokemon.types.map((t) => t.key).toList());
+    final cardColor = getCardBackgroundColor(
+      widget.pokemon.types.map((t) => t.key).toList(),
+    );
 
     return ScaleTransition(
       scale: _scaleAnimation,
@@ -114,7 +116,9 @@ class _PokemonCardState extends State<PokemonCard>
                       const SizedBox(height: 4),
                       Text(
                         widget.pokemon.formattedName,
-                        style: AppTypography.h3,
+                        maxLines: 1,
+                        overflow: .ellipsis,
+                        style: AppTypography.h4,
                       ),
                       const SizedBox(height: 8),
                       SingleChildScrollView(
@@ -122,8 +126,9 @@ class _PokemonCardState extends State<PokemonCard>
                           spacing: 6,
                           children: List.generate(
                             widget.pokemon.types.length,
-                            (index) =>
-                                _TypeTag(typeKey: widget.pokemon.types[index].key),
+                            (index) => _TypeTag(
+                              typeKey: widget.pokemon.types[index].key,
+                            ),
                           ),
                         ),
                       ),
@@ -144,7 +149,7 @@ class _PokemonCardState extends State<PokemonCard>
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.5),
-                          shape: BoxShape.circle,
+                          shape: .circle,
                         ),
                       ),
                       Icon(
@@ -164,7 +169,7 @@ class _PokemonCardState extends State<PokemonCard>
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Colors.black12,
-                                shape: BoxShape.circle,
+                                shape: .circle,
                                 border: Border.all(
                                   color: Colors.white,
                                   width: 2,

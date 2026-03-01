@@ -27,5 +27,9 @@
   "labelRole": "Rol:",
   "labelLocation": "Ubicación:",
   "labelAge": "Edad",
-  "viewProfileOnLinkedin": "VER PERFIL EN LINKEDIN"
+  "viewProfileOnLinkedin": "VER PERFIL EN LINKEDIN",
+  "filterByPreferences": "Filtra por tus preferencias",
+  "filterType": "Tipo",
+  "apply": "Aplicar",
+  "cancel": "Cancelar"
 }

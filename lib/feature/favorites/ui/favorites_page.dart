@@ -48,23 +48,11 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
       ),
       body: LoadingPage(
         isLoading: state.isLoading,
-        child: Column(
-          children: [
-            PokedexSearchBar(
-              controller: state.searchController,
-            ),
-            Expanded(
-              child: PokemonList(
-                favorites: state.favorites,
-                onFavoriteTap: provider.toggleFavorite,
-                onPokemonTap: (p) => context.push('/pokemon/${p.id}'),
-                pokemon: provider.filterPokemon(
-                  state.pokemonList,
-                  state.searchQuery,
-                ),
-              ),
-            ),
-          ],
+        child: PokemonList(
+          favorites: state.favorites,
+          onFavoriteTap: provider.toggleFavorite,
+          onPokemonTap: (p) => context.push('/pokemon/${p.id}'),
+          pokemon: provider.filterPokemon(state.pokemonList, state.searchQuery),
         ),
       ),
     );
