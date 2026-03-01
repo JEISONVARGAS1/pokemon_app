@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../components/backgrounds/app_background.dart';
 import '../components/buttons/primary_button.dart';
+import 'information_view.dart';
 import '../components/buttons/secondary_button.dart';
 import '../components/cards/app_card.dart';
 import '../components/inputs/text_input.dart' as uikit;
@@ -19,6 +20,7 @@ class UiWidget {
   factory UiWidget() => _instance;
 
   UiWidgetButtons get buttons => UiWidgetButtons();
+  UiWidgetInfoViews get infoViews => UiWidgetInfoViews();
   UiWidgetInputs get inputs => UiWidgetInputs();
   UiWidgetCards get cards => UiWidgetCards();
   UiWidgetBackgrounds get backgrounds => UiWidgetBackgrounds();
@@ -56,6 +58,28 @@ class UiWidgetButtons {
       isLoading: isLoading,
       icon: icon,
       width: width,
+    );
+  }
+}
+
+class UiWidgetInfoViews {
+  Widget informationView({
+    required String title,
+    required Widget image,
+    required String description,
+    String? buttonLabel,
+    VoidCallback? onButtonPressed,
+    double? imageHeight,
+    double? imageWidth,
+  }) {
+    return InformationView(
+      title: title,
+      image: image,
+      description: description,
+      buttonLabel: buttonLabel,
+      onButtonPressed: onButtonPressed,
+      imageHeight: imageHeight,
+      imageWidth: imageWidth,
     );
   }
 }

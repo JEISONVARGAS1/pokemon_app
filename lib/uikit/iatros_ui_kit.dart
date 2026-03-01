@@ -18,5 +18,8 @@ export 'components/backgrounds/app_background.dart';
 export 'components/logo/app_logo.dart';
 export 'components/popups/app_popup.dart';
 
+// Widgets
+export 'widgets/information_view.dart';
+
 // Facade
 export 'widgets/ui_widget.dart';

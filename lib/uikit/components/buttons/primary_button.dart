@@ -24,13 +24,16 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width,
+      width: width ?? double.infinity,
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
+          backgroundColor: AppColors.info,
           foregroundColor: AppColors.surface,
           disabledBackgroundColor: AppColors.textTertiary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
         ),
         child: isLoading
             ? const SizedBox(
@@ -41,18 +44,15 @@ class PrimaryButton extends StatelessWidget {
                   valueColor: AlwaysStoppedAnimation<Color>(AppColors.surface),
                 ),
               )
-            : Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (icon != null) ...[
-                    icon!,
-                    const SizedBox(width: AppSpacing.sm),
-                  ],
-                  Text(label, style: AppTypography.button),
-                ],
+            : Center(
+                child: Text(
+                  label,
+                  style: AppTypography.button.copyWith(
+                    color: AppColors.surface,
+                  ),
+                ),
               ),
-        ),
+      ),
     );
   }
 }

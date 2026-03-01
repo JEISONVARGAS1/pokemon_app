@@ -4,14 +4,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/core/widget/page_not_found.dart';
 import 'package:prokemn_app/feature/home/ui/home_page.dart';
 import 'package:prokemn_app/feature/lobby/ui/lobby_page.dart';
+import 'package:prokemn_app/feature/onboarding/ui/onboarding_page.dart';
+import 'package:prokemn_app/feature/splash/ui/splash_page.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
-  const initialLocation = '/lobby';
+  const initialLocation = '/splash';
 
   return GoRouter(
     initialLocation: initialLocation,
     errorBuilder: (context, state) => PageNotFound(state: state),
     routes: [
+      GoRoute(
+        name: 'splash',
+        path: '/splash',
+        builder: (context, state) => const SplashPage(),
+      ),
+      GoRoute(
+        name: 'onboarding',
+        path: '/onboarding',
+        pageBuilder: (context, state) =>
+            buildPageWithTransition(const OnboardingPage()),
+      ),
       GoRoute(
         name: 'lobby',
         path: '/lobby',

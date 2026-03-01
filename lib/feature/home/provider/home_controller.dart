@@ -44,14 +44,25 @@ class HomeController extends _$HomeController {
   }
 
   Future<void> _getPokemonList() async {
+    _setState(state.value!.copyWith(isLoading: true));
     final result = await repository.fetchPokemonList(limit: 20, offset: 0);
 
     if (result.isSuccessful) {
       _setState(
-        state.value!.copyWith(pokemonList: result.data!, isLoading: false),
+        state.value!.copyWith(
+          isLoading: false,
+          errorMessage: '',
+          pokemonList: result.data!,
+        ),
       );
     } else {
-      _setState(state.value!.copyWith(isLoading: false));
+      _setState(
+        state.value!.copyWith(
+          isLoading: false,
+          errorMessage:
+              'No pudimos cargar la información en este momento. Verifica tu conexión o intenta nuevamente más tarde.',
+        ),
+      );
     }
   }
 

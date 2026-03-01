@@ -5,6 +5,7 @@ import 'package:prokemn_app/core/widget/loading_page.dart';
 import 'package:prokemn_app/core/widget/pokemon_list.dart';
 import 'package:prokemn_app/feature/home/provider/home_controller.dart';
 import 'package:prokemn_app/feature/home/ui/widgets/pokedex_search_bar.dart';
+import 'package:prokemn_app/uikit/iatros_ui_kit.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -26,6 +27,17 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(homeControllerProvider).value!;
     final provider = ref.read(homeControllerProvider.notifier);
+
+    if (state.errorMessage.isNotEmpty) {
+      return InformationView(
+        buttonLabel: "Reintentar",
+        isLoading: state.isLoading, 
+        title: "Algo salió mal...",
+        description: state.errorMessage,
+        image: Image.asset('assets/image/error.png'),
+        onButtonPressed: () => provider.initPage(),
+      );
+    }
 
     return Scaffold(
       backgroundColor: Colors.grey.shade50,

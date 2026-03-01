@@ -12,7 +12,7 @@ class AppTheme {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: AppColors.primary,
       primary: AppColors.primary,
-      primaryContainer: AppColors.primaryLight,
+      primaryContainer: AppColors.blueLight,
       secondary: AppColors.secondary,
       secondaryContainer: AppColors.secondaryLight,
       surface: AppColors.surface,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prokemn_app/uikit/iatros_ui_kit.dart';
 import 'package:prokemn_app/feature/home/data/model/pokemon_model.dart';
 import 'package:prokemn_app/feature/home/ui/widgets/pokemon_type_utils.dart';
 
@@ -32,9 +33,10 @@ class _PokemonCardState extends State<PokemonCard>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(begin: 0.95, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 0.95,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
     _controller.forward();
 
     _jumpController = AnimationController(
@@ -43,13 +45,17 @@ class _PokemonCardState extends State<PokemonCard>
     );
     _jumpAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 0, end: 1)
-            .chain(CurveTween(curve: Curves.easeOut)),
+        tween: Tween<double>(
+          begin: 0,
+          end: 1,
+        ).chain(CurveTween(curve: Curves.easeOut)),
         weight: 1,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1, end: 0)
-            .chain(CurveTween(curve: Curves.elasticOut)),
+        tween: Tween<double>(
+          begin: 1,
+          end: 0,
+        ).chain(CurveTween(curve: Curves.elasticOut)),
         weight: 1,
       ),
     ]).animate(_jumpController);
@@ -74,6 +80,7 @@ class _PokemonCardState extends State<PokemonCard>
     return ScaleTransition(
       scale: _scaleAnimation,
       child: Container(
+        height: 130,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
           color: cardColor,
@@ -86,69 +93,82 @@ class _PokemonCardState extends State<PokemonCard>
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Expanded(
+        child: Row(
+          children: [
+            Expanded(
+              flex: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: .min,
+                  crossAxisAlignment: .start,
                   children: [
                     Text(
                       widget.pokemon.pokedexNumber,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade700,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: AppTypography.bodySmall,
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      widget.pokemon.formattedName,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
+                    Text(widget.pokemon.formattedName, style: AppTypography.h3),
                     const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
-                      children: widget.pokemon.types
-                          .map((type) => _TypeTag(typeKey: type))
-                          .toList(),
+                    SingleChildScrollView(
+                      child: Row(
+                        spacing: 6,
+                        children: List.generate(
+                          widget.pokemon.types.length,
+                          (index) =>
+                              _TypeTag(typeKey: widget.pokemon.types[index]),
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
-                width: 120,
-                height: 100,
+            ),
+            Expanded(
+              flex: 3,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: cardColor.withOpacity(0.9),
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
                     Container(
-                      width: 90,
-                      height: 90,
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.5),
                         shape: BoxShape.circle,
                       ),
                     ),
+                    Icon(
+                        _getTypeIcon(widget.pokemon.types.first),
+                        size: 130,
+                        color: getTypeColor(widget.pokemon.types.first).withValues(alpha: 0.5),
+                      ),
                     Positioned(
-                      top: 0,
-                      right: 0,
+                      top: 5,
+                      right: 5,
                       child: GestureDetector(
                         onTap: _onFavoriteTap,
                         child: AnimatedSwitcher(
                           duration: const Duration(milliseconds: 200),
-                          child: Icon(
-                            widget.isFavorite ? Icons.favorite : Icons.favorite_border,
-                            key: ValueKey(widget.isFavorite),
-                            color: widget.isFavorite ? Colors.red : Colors.black54,
-                            size: 24,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black12,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white, width: 2),
+                            ),
+                            padding: const EdgeInsets.all(4),
+                            child: Icon(
+                              widget.isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              key: ValueKey(widget.isFavorite),
+                              color: widget.isFavorite
+                                  ? Colors.red
+                                  : Colors.white,
+                              size: 24,
+                            ),
                           ),
                         ),
                       ),
@@ -160,10 +180,7 @@ class _PokemonCardState extends State<PokemonCard>
                         final translateY = -12 * _jumpAnimation.value;
                         return Transform.translate(
                           offset: Offset(0, translateY),
-                          child: Transform.scale(
-                            scale: scale,
-                            child: child,
-                          ),
+                          child: Transform.scale(scale: scale, child: child),
                         );
                       },
                       child: Image.network(
@@ -191,8 +208,8 @@ class _PokemonCardState extends State<PokemonCard>
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -211,7 +228,7 @@ class _TypeTag extends StatelessWidget {
     final name = getTypeName(typeKey);
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(20),
@@ -220,37 +237,45 @@ class _TypeTag extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(_getTypeIcon(typeKey), size: 14, color: Colors.white),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            padding: const EdgeInsets.all(2),
+            child: Icon(_getTypeIcon(typeKey), size: 14, color: color),
+          ),
+
           const SizedBox(width: 4),
           Text(
             name,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-            ),
+            style: AppTypography.bodyMedium.copyWith(color: AppColors.surface),
           ),
         ],
       ),
     );
   }
+}
 
-  IconData _getTypeIcon(String type) {
-    switch (type) {
-      case 'grass':
-        return Icons.eco;
-      case 'fire':
-        return Icons.local_fire_department;
-      case 'water':
-        return Icons.water_drop;
-      case 'poison':
-        return Icons.science;
-      case 'electric':
-        return Icons.bolt;
-      case 'flying':
-        return Icons.flight;
-      default:
-        return Icons.circle;
-    }
+IconData _getTypeIcon(String type) {
+  switch (type) {
+    case 'grass':
+      return Icons.eco;
+    case 'fire':
+      return Icons.local_fire_department;
+    case 'water':
+      return Icons.water_drop;
+    case 'poison':
+      return Icons.science;
+    case 'electric':
+      return Icons.bolt;
+    case 'flying':
+      return Icons.flutter_dash;
+    case 'bug':
+      return Icons.bug_report;
+    case 'normal':
+      return Icons.circle;
+    default:
+      return Icons.circle;
   }
 }

@@ -5,6 +5,7 @@ import 'package:prokemn_app/core/widget/loading_page.dart';
 import 'package:prokemn_app/core/widget/pokemon_list.dart';
 import 'package:prokemn_app/feature/home/ui/widgets/pokedex_search_bar.dart';
 import 'package:prokemn_app/feature/favorites/provider/favorites_controller.dart';
+import 'package:prokemn_app/uikit/iatros_ui_kit.dart';
 
 class FavoritesPage extends ConsumerStatefulWidget {
   const FavoritesPage({super.key});
@@ -26,6 +27,15 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(favoritesControllerProvider).value!;
     final provider = ref.read(favoritesControllerProvider.notifier);
+
+        if (state.pokemonList.isEmpty) {
+      return InformationView(
+        isLoading: state.isLoading, 
+        image: Image.asset('assets/image/error.png'),
+        title: "No has marcado ningún Pokémon como favorito",
+        description: "Haz clic en el ícono de corazón de tus Pokémon favoritos y aparecerán aquí.",
+      );
+    }
 
     return Scaffold(
       backgroundColor: Colors.grey.shade50,

@@ -10,6 +10,7 @@ sealed class HomeState with _$HomeState {
     @Default(false) bool isLoading,
     @Default('') String searchQuery,
     @Default({}) Set<int> favorites,
+    @Default('') String errorMessage,
     @Default([]) List<PokemonModel> pokemonList,
     required TextEditingController searchController,
   }) = HomeStateData;
