@@ -52,8 +52,6 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
           children: [
             PokedexSearchBar(
               controller: state.searchController,
-              onSearchTap: () =>
-                  provider.setSearchQuery(state.searchController.text),
             ),
             Expanded(
               child: PokemonList(

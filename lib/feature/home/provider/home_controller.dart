@@ -14,6 +14,8 @@ class HomeController extends _$HomeController {
     ref.keepAlive();
     ref.onDispose(() {
       state.value!.searchController.dispose();
+      state.value!.scrollController.removeListener(_onScroll);
+      state.value!.scrollController.dispose();
     });
 
     return HomeState.init();
@@ -24,15 +26,32 @@ class HomeController extends _$HomeController {
       ref.read(globalControllerProvider.notifier);
 
   Future<void> initPage() async {
+    state.value!.scrollController.addListener(_onScroll);
     if (state.value!.pokemonList.isEmpty) {
-      _setState(state.value!.copyWith(
-        isLoading: true,
-        page: 0,
-        hasReachedEnd: false,
-      ));
+      _setState(
+        state.value!.copyWith(page: 0, isLoading: true, hasReachedEnd: false),
+      );
       await _getPokemonList();
       _listenFavorites();
+      _listenSearchQuery();
     }
+  }
+
+  void _listenSearchQuery() {
+    state.value!.searchController.addListener(() {
+      state.value!.debouncer.run(() async {
+        final result = await repository.fetchPokemonByNameLike(
+          state.value!.searchController.text,
+        );
+        if (result.isSuccessful) {
+          _setState(state.value!.copyWith(pokemonListFiltered: result.data!));
+        } else {
+          _setState(
+            state.value!.copyWith(errorMessage: result.exceptionCode.message),
+          );
+        }
+      });
+    });
   }
 
   void _listenFavorites() {
@@ -104,30 +123,25 @@ class HomeController extends _$HomeController {
       );
     } else {
       _setState(
-        state.value!.copyWith(
-          isLoadingNextPage: false,
-          hasReachedEnd: true,
-        ),
+        state.value!.copyWith(isLoadingNextPage: false, hasReachedEnd: true),
       );
     }
   }
 
-  void setSearchQuery(String query) {
-    _setState(state.value!.copyWith(searchQuery: query));
-  }
-
   void toggleFavorite(int pokemonId) {
+    final list = state.value!.searchController.text.isNotEmpty
+        ? state.value!.pokemonListFiltered
+        : state.value!.pokemonList;
+
     final current = state.value!.favorites.toSet();
     if (current.contains(pokemonId)) {
       current.remove(pokemonId);
     } else {
       current.add(pokemonId);
     }
-    final pokemonList = current
-        .map((pokemonId) => state.value!.pokemonList[pokemonId - 1])
-        .toList();
+    final pokeList = current.map((pokemonId) => list[pokemonId - 1]).toList();
     _setState(state.value!.copyWith(favorites: current));
-    globalController.savePokemonListFavorites(pokemonList);
+    globalController.savePokemonListFavorites(pokeList);
   }
 
   List<PokemonModel> filterPokemon(List<PokemonModel> list, String query) {
@@ -144,6 +158,17 @@ class HomeController extends _$HomeController {
 
       return isMatchName || isMatchFormattedName || isMatchPokedexNumber;
     }).toList();
+  }
+
+  void _onScroll() {
+    final state = ref.read(homeControllerProvider).value;
+    if (state == null || state.searchQuery.isNotEmpty) return;
+
+    final position = state.scrollController.position;
+    if (position.maxScrollExtent > 0 &&
+        position.pixels >= position.maxScrollExtent * 0.7) {
+      loadNextPage();
+    }
   }
 
   void _setState(HomeState newState) => state = AsyncValue.data(newState);

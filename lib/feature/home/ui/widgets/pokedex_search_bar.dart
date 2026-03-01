@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 
 class PokedexSearchBar extends StatelessWidget {
   final TextEditingController controller;
-  final VoidCallback onSearchTap;
 
   const PokedexSearchBar({
     super.key,
     required this.controller,
-    required this.onSearchTap,
   });
 
   @override
@@ -49,7 +47,7 @@ class PokedexSearchBar extends StatelessWidget {
           Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: onSearchTap,
+              onTap: () => controller.clear(),
               borderRadius: BorderRadius.circular(24),
               child: Container(
                 width: 48,

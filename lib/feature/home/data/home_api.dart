@@ -28,6 +28,70 @@ class _HomeApi extends HomeApiInterface {
     }
     return [];
   }
+
+  @override
+  Future<List<PokemonModel>> fetchPokemonByNameLike(String query) async {
+    if (query.trim().isEmpty) return [];
+
+    final res = await get(urlSpecific: 'pokemon?limit=10000&offset=0');
+    if (!res.isSuccessful) return [];
+
+    final results = res.data["results"] as List<dynamic>? ?? [];
+    final lowerQuery = query.trim().toLowerCase();
+
+    final matchingUrls = results
+        .where((item) {
+          final name = (item["name"] as String? ?? "").toLowerCase();
+          return name.contains(lowerQuery);
+        })
+        .map((item) => item["url"] as String)
+        .toList();
+
+    if (matchingUrls.isEmpty) return [];
+
+    final responses = await Future.wait(
+      matchingUrls.map((url) => get(urlSpecific: url, isCustomUrl: true)),
+    );
+
+    return responses
+        .where((r) => r.isSuccessful)
+        .map((r) => PokemonModel.fromJson(r.data))
+        .toList();
+  }
+
+  @override
+  Future<List<PokemonModel>> fetchPokemonByTypes(List<String> types) async {
+    if (types.isEmpty) return [];
+
+    final typeNames = types.map((t) => t.trim().toLowerCase()).where((t) => t.isNotEmpty).toSet().toList();
+    if (typeNames.isEmpty) return [];
+
+    final allUrls = <String>{};
+
+    for (final typeName in typeNames) {
+      final res = await get(urlSpecific: 'type/$typeName');
+      if (!res.isSuccessful) continue;
+
+      final pokemonList = res.data["pokemon"] as List<dynamic>? ?? [];
+      for (final entry in pokemonList) {
+        final pokemon = entry["pokemon"];
+        if (pokemon != null && pokemon["url"] != null) {
+          allUrls.add(pokemon["url"] as String);
+        }
+      }
+    }
+
+    if (allUrls.isEmpty) return [];
+
+    final responses = await Future.wait(
+      allUrls.map((url) => get(urlSpecific: url, isCustomUrl: true)),
+    );
+
+    return responses
+        .where((r) => r.isSuccessful)
+        .map((r) => PokemonModel.fromJson(r.data))
+        .toList();
+  }
 }
 
 final homeApiProvider = Provider<HomeApiInterface>((Ref ref) => _HomeApi());

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
-import 'package:prokemn_app/core/extension/context_extension.dart';
 import 'package:prokemn_app/uikit/pokemn_ui_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prokemn_app/core/widget/loading_page.dart';
 import 'package:prokemn_app/core/widget/pokemon_list.dart';
+import 'package:prokemn_app/core/extension/context_extension.dart';
 import 'package:prokemn_app/feature/home/provider/home_controller.dart';
 import 'package:prokemn_app/feature/home/ui/widgets/pokedex_search_bar.dart';
 
@@ -17,33 +17,12 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  final ScrollController _scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback(
       (_) => ref.read(homeControllerProvider.notifier).initPage(),
     );
-    _scrollController.addListener(_onScroll);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.removeListener(_onScroll);
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _onScroll() {
-    final state = ref.read(homeControllerProvider).value;
-    if (state == null || state.searchQuery.isNotEmpty) return;
-
-    final position = _scrollController.position;
-    if (position.maxScrollExtent > 0 &&
-        position.pixels >= position.maxScrollExtent * 0.7) {
-      ref.read(homeControllerProvider.notifier).loadNextPage();
-    }
   }
 
   @override
@@ -53,7 +32,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     if (state.errorMessage.isNotEmpty) {
       return InformationView(
-        isLoading: state.isLoading, 
+        isLoading: state.isLoading,
         buttonLabel: context.l10n.retry,
         description: state.errorMessage,
         title: context.l10n.somethingWentWrong,
@@ -61,6 +40,10 @@ class _HomePageState extends ConsumerState<HomePage> {
         onButtonPressed: () => provider.initPage(),
       );
     }
+
+    final pokemonList = state.searchController.text.isNotEmpty
+        ? state.pokemonListFiltered
+        : state.pokemonList;
 
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
@@ -73,21 +56,14 @@ class _HomePageState extends ConsumerState<HomePage> {
         isLoading: state.isLoading,
         child: Column(
           children: [
-            PokedexSearchBar(
-              controller: state.searchController,
-              onSearchTap: () =>
-                  provider.setSearchQuery(state.searchController.text),
-            ),
+            PokedexSearchBar(controller: state.searchController),
             Expanded(
               child: PokemonList(
-                scrollController: _scrollController,
                 favorites: state.favorites,
                 onFavoriteTap: provider.toggleFavorite,
+                scrollController: state.scrollController,
                 onPokemonTap: (p) => context.push('/pokemon/${p.id}'),
-                pokemon: provider.filterPokemon(
-                  state.pokemonList,
-                  state.searchQuery,
-                ),
+                pokemon: provider.filterPokemon(pokemonList, state.searchQuery),
               ),
             ),
           ],
