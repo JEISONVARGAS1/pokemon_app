@@ -50,4 +50,5 @@ flutter:
   assets:
     - assets/icons/
     - assets/image/
+    - assets/readme_image/
 
